@@ -3,6 +3,7 @@ package spbuhomework.cw1
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.assertThrows
 
 
 internal class PriorityQueueTest {
@@ -45,6 +46,20 @@ internal class PriorityQueueTest {
         val citiesOrganized = listOf("Moscow", "Kiev", "New-York", "Amsterdam")
         for (i in 0..3) {
             assertEquals(citiesOrganized[i], queue.dequeue())
+        }
+    }
+
+    @Test
+    fun PriorityQueue_dequeueFromEmptyQueue_exceptionOutput() {
+        val queue = PriorityQueue<Int>()
+        for (i in 1..4) {
+            queue.enqueue(i, i)
+        }
+
+        assertThrows(IndexOutOfBoundsException::class.java) {
+            for (i in 1..5) {
+                queue.dequeue()
+            }
         }
     }
 }
