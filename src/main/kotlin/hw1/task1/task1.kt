@@ -1,14 +1,9 @@
-package hw1.task1
-
-fun splitAndRejoin(m: Int, n: Int, input: IntArray): Array<Int>? {
-    if (m < 0 || n < 0) {
+fun splitAndRejoin(m: Int, n: Int, input: IntArray): IntArray? {
+    if (m < 0 || n < 0 || m + n != input.size) {
         return null
     }
-    if (m + n != input.size) {
-        return null
-    }
-    val firstPart = Array(m) { i -> input[i] }.reversedArray()
-    val secondPart = Array(n) { i -> input[i + m] }.reversedArray()
+    val firstPart = IntArray(m) { i -> input[i] }.reversedArray()
+    val secondPart = IntArray(n) { i -> input[i + m] }.reversedArray()
     return (firstPart + secondPart).reversedArray()
 }
 
