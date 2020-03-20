@@ -1,3 +1,5 @@
+package spbuhomework.hw1.task2
+
 fun recursiveFactorial(number: Int): Long {
     if (number <= 1) {
         return 1
@@ -13,18 +15,17 @@ fun cyclicFactorial(number: Int): Long {
     return answer
 }
 
-val scan = java.util.Scanner(System.`in`)
 fun main(args: Array<String>) {
     println(
         "Enter the way of operating:\n" +
                 "(r - recursively\n" +
                 "l - by the loop)"
     )
-    val theWayOfOperating = scan.next()
+    val theWayOfOperating = readLine()
     println("Enter the number:")
-    val number = scan.nextInt()
-    if (number < 0) {
-        println("Factorial of $number does not defined")
+    val number = readLine()?.toInt()
+    if (number == null || number < 0) {
+        println("Factorial of this number does not defined")
         return
     }
     when (theWayOfOperating) {
