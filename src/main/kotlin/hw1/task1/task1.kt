@@ -1,3 +1,5 @@
+package spbuhomework.hw1.task1
+
 fun splitAndRejoin(m: Int, n: Int, input: IntArray): IntArray? {
     if (m < 0 || n < 0 || m + n != input.size) {
         return null
