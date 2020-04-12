@@ -20,10 +20,10 @@ fun main(args: Array<String>) {
                 queue.enqueue(scan.nextInt(), scan.nextInt())
             }
             2 -> {
-                try {
+                if (queue.getLength() > 0) {
                     println("Top priority element: ${queue.dequeue()}")
-                } catch (exception: ArrayIndexOutOfBoundsException) {
-                    println("Priority queue is empty")
+                } else {
+                    println("Queue is empty")
                 }
             }
         }

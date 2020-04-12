@@ -18,4 +18,8 @@ class PriorityQueue<T : Comparable<T>> {
         entrySet.remove(topPriorityElement)
         return topPriorityElement.content
     }
+
+    fun getLength(): Int {
+        return entrySet.size
+    }
 }
