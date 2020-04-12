@@ -21,7 +21,6 @@ fun getNumberOfInclusions(mainString: String, subString: String): Int {
     return inclusions
 }
 
-
 val scan = java.util.Scanner(System.`in`)
 fun main(args: Array<String>) {
     println("Enter the main string:")
