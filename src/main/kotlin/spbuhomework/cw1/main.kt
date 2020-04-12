@@ -22,7 +22,7 @@ fun main(args: Array<String>) {
             2 -> {
                 try {
                     println("Top priority element: ${queue.dequeue()}")
-                } catch (exception: IndexOutOfBoundsException) {
+                } catch (exception: ArrayIndexOutOfBoundsException) {
                     println("Priority queue is empty")
                 }
             }

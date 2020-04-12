@@ -56,7 +56,7 @@ internal class PriorityQueueTest {
             queue.enqueue(i, i)
         }
 
-        assertThrows(IndexOutOfBoundsException::class.java) {
+        assertThrows(ArrayIndexOutOfBoundsException::class.java) {
             for (i in 1..5) {
                 queue.dequeue()
             }
