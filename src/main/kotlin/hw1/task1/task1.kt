@@ -2,30 +2,34 @@ package spbuhomework.hw1.task1
 
 fun splitAndRejoin(m: Int, n: Int, input: IntArray): IntArray? {
     if (m < 0 || n < 0 || m + n != input.size) {
-        return null
+        throw IllegalArgumentException("Bounds does not match array length")
     }
-    val firstPart = IntArray(m) { i -> input[i] }.reversedArray()
-    val secondPart = IntArray(n) { i -> input[i + m] }.reversedArray()
-    return (firstPart + secondPart).reversedArray()
+    return (input.dropLast(n).reversed() + input.drop(m).reversed()).reversed().toIntArray()
 }
 
-val scan = java.util.Scanner(System.`in`)
 fun main(args: Array<String>) {
     println("Enter m and n:")
-    val m = scan.nextInt()
-    val n = scan.nextInt()
-    val myArray = IntArray(m + n) { 0 }
+    val m = readLine()?.toInt()
+    val n = readLine()?.toInt()
+    if (m == null || n == null) {
+        println("Incorrect input for bounds")
+        return
+    }
+
     println(
         "Enter the array of int with the length of ${m + n} " +
                 "(other numbers will be ignored)"
     )
-    for (i in 0 until m + n) {
-        myArray[i] = scan.nextInt()
+    val myArray = readLine()?.split(" ")?.map { it.toInt() }?.toIntArray() ?: return
+
+    var answer: IntArray? = null
+    try {
+        answer = splitAndRejoin(m, n, myArray)
+    } catch (exception: IllegalArgumentException) {
+        println(exception.message)
     }
-    val answer = splitAndRejoin(m, n, myArray)
+
     if (answer != null) {
         print("Answer: " + answer.joinToString())
-    } else {
-        print("Something went wrong")
     }
 }
