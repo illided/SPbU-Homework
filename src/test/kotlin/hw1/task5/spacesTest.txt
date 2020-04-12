@@ -1,0 +1,5 @@
+Here 5 spaces in each next line
+     
+     
+     
+end of file
