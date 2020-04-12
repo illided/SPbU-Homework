@@ -1,15 +1,16 @@
 package spbuhomework.hw2.task1
 
+const val THRESHOLD = 3
+
 fun getNumberOfExcessSymbols(inputString: String): Int {
     var currentNumOfX = 0
-    val treshold = 3
     var answer = 0
     for (char in inputString) {
         if (char == 'x') {
             currentNumOfX++
         } else {
-            if (currentNumOfX > treshold) {
-                answer += currentNumOfX - treshold
+            if (currentNumOfX > THRESHOLD) {
+                answer += currentNumOfX - THRESHOLD
             }
             currentNumOfX = 0
         }
