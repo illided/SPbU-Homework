@@ -7,14 +7,11 @@ fun splitAndRejoin(m: Int, n: Int, input: IntArray): IntArray? {
     return (input.dropLast(n).reversed() + input.drop(m).reversed()).reversed().toIntArray()
 }
 
+val scan = java.util.Scanner(System.`in`)
 fun main(args: Array<String>) {
     println("Enter m and n:")
-    val m = readLine()?.toInt()
-    val n = readLine()?.toInt()
-    if (m == null || n == null) {
-        println("Incorrect input for bounds")
-        return
-    }
+    val m = scan.nextInt()
+    val n = scan.nextInt()
 
     println(
         "Enter the array of int with the length of ${m + n} " +
