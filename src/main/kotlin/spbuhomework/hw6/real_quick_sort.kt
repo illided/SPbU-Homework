@@ -24,13 +24,19 @@ suspend fun <T : Comparable<T>> realQuicksort(items: List<T>): List<T> {
     return less.await() + equal + greater.await()
 }
 
-fun main() = runBlocking<Unit> {
+fun createPsuedoRandomList(seed: Int = 5) : List<Int> {
     val myList = mutableListOf<Int>()
-    for (i in 1..5000) {
-        myList.add(2 * i)
-        myList.add(5 * i - 5)
-        myList.add(100 - i)
+    for (i in 1..seed) {
+        myList.add(seed * i)
+        myList.add(seed * i - seed)
+        myList.add(seed - i)
     }
+    return myList
+}
+
+fun main() = runBlocking<Unit> {
+    val myList = createPsuedoRandomList()
+
     val time = measureTimeMillis { val mySortedList = basicQuicksort(myList) }
     println("Standart quick sort: $time")
 
