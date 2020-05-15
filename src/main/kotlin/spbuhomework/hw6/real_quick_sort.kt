@@ -24,7 +24,7 @@ suspend fun <T : Comparable<T>> realQuicksort(items: List<T>): List<T> {
     return less.await() + equal + greater.await()
 }
 
-fun createPsuedoRandomList(seed: Int = 5) : List<Int> {
+fun createPsuedoRandomList(seed: Int = 5): List<Int> {
     val myList = mutableListOf<Int>()
     for (i in 1..seed) {
         myList.add(seed * i)
