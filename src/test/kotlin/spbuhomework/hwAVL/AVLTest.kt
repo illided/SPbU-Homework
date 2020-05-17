@@ -40,15 +40,29 @@ internal class AVLTest {
 
     @Test
     fun clear() {
+
     }
 
     @Test
-    fun put() {
+    fun put_emptyAVLDataInput_sameValueOutput() {
         val myAVL = AVL<Int, Int>()
-        myAVL[5] = 5
-        myAVL[1] = 4
-        myAVL[3] = 7
-        assertEquals(myAVL[5], 5)
+        assertEquals(myAVL.put(7, 5), 5)
+    }
+
+    @Test
+    fun put_nonEmptyAVLDataInput_sameValueOutput() {
+        val myAVL = AVL<Int, Int>()
+        myAVL.put(5, 5)
+        myAVL.put(10, 9)
+        myAVL.put(9, 8)
+        assertEquals(myAVL.put(7, 5), 5)
+    }
+
+    @Test
+    fun put_alreadyExistingElementInput_nullAsOutput() {
+        val myAVL = AVL<Int, Int>()
+        myAVL.put(8, 5)
+        assertEquals(myAVL.put(8, 7), null)
     }
 
     @Test
@@ -57,5 +71,13 @@ internal class AVLTest {
 
     @Test
     fun remove() {
+    }
+
+    @Test
+    fun put() {
+    }
+
+    @Test
+    fun testToString() {
     }
 }

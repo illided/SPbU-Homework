@@ -2,8 +2,14 @@ package spbuhomework.hwAVL
 
 fun main() {
     val myAVL = AVL<Int, Int>()
-    myAVL[1] = 2
-    myAVL[2] = 5
-    myAVL[4] = 7
-    myAVL.print()
+    myAVL.put(1, 6)
+    myAVL.put(2, 5)
+    myAVL.put(4, 7)
+    println(myAVL.toString())
+    myAVL.remove(4)
+    println(myAVL.toString())
+    myAVL.remove(1)
+    println(myAVL.toString())
+    myAVL.remove(2)
+    println(myAVL.toString())
 }
