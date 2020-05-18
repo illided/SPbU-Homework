@@ -8,12 +8,12 @@ open class AVL<K : Comparable<K>, V> : Map<K, V> {
     private val walk = Walker()
     private val manipulator = Manipulator()
 
-    inner class Walker {
+    private inner class Walker {
 
-        fun toSpecificNode(currentNode: Node<K, V>, key: K, stopFun: (Node<K, V>) -> Boolean): Node<K, V>? {
-            val leftChild = currentNode.leftChild
-            val rightChild = currentNode.rightChild
-            return if (stopFun(currentNode)) {
+        fun toSpecificNode(currentNode: Node<K, V>?, key: K, stopFun: (Node<K, V>) -> Boolean): Node<K, V>? {
+            val leftChild = currentNode?.leftChild
+            val rightChild = currentNode?.rightChild
+            return if (currentNode == null || stopFun(currentNode)) {
                 currentNode
             } else if (key > currentNode.key && rightChild != null) {
                 toSpecificNode(rightChild, key, stopFun)
@@ -25,7 +25,7 @@ open class AVL<K : Comparable<K>, V> : Map<K, V> {
         }
 
         fun toSpecificNodeFromRoot(key: K, stopFun: (Node<K, V>) -> Boolean): Node<K, V>? {
-            val startingNode = root ?: throw IndexOutOfBoundsException("Trying to find an item from an empty set")
+            val startingNode = root
             return toSpecificNode(startingNode, key, stopFun)
         }
 
@@ -46,7 +46,7 @@ open class AVL<K : Comparable<K>, V> : Map<K, V> {
         }
     }
 
-    inner class Manipulator() {  //add function put and remove
+    private inner class Manipulator {
 
         private fun removeMin(node: Node<K, V>): Node<K, V>? {
             val leftChild = node.leftChild ?: return node.rightChild
@@ -54,20 +54,23 @@ open class AVL<K : Comparable<K>, V> : Map<K, V> {
             return node.balance()
         }
 
-        fun removeNode(node: Node<K, V>?, key: K): Node<K, V>? {
-            if (node == null) {
-                return null
-            }
+        fun removeNode(node: Node<K, V>, key: K): Node<K, V>? {
+            val outputNode: Node<K, V>?
             when {
-                (key < node.key) -> node.leftChild = removeNode(node.leftChild, key)
-                (key > node.key) -> node.rightChild = removeNode(node.rightChild, key)
+                key < node.key -> node.leftChild = node.leftChild?.let { removeNode(it, key) }
+                key > node.key -> node.rightChild = node.rightChild?.let { removeNode(it, key) }
                 else -> {
                     val leftChild = node.leftChild
-                    val rightChild = node.rightChild ?: return leftChild
-                    val localMin = walk.toSpecificNode(rightChild, key, { it.leftChild == null })
-                    localMin?.rightChild = removeMin(rightChild)
-                    localMin?.leftChild = leftChild
-                    return localMin?.balance()
+                    val rightChild = node.rightChild
+                    if (rightChild == null) {
+                        outputNode = leftChild
+                    } else {
+                        val localMin = walk.toSpecificNode(rightChild, key, { it.leftChild == null })
+                        localMin?.rightChild = removeMin(rightChild)
+                        localMin?.leftChild = leftChild
+                        outputNode = localMin?.balance()
+                    }
+                    return outputNode
                 }
             }
             return node.balance()
@@ -89,15 +92,11 @@ open class AVL<K : Comparable<K>, V> : Map<K, V> {
     override var size: Int = 0
 
     override fun containsKey(key: K): Boolean {
-        return try {
-            walk.toSpecificNodeFromRoot(key, { it.key == key }) ?: return false
-            true
-        } catch (exception: IndexOutOfBoundsException) {
-            false
-        }
+        walk.toSpecificNodeFromRoot(key, { it.key == key }) ?: return false
+        return true
     }
 
-    override fun containsValue(value: V): Boolean { //need to ve implemented
+    override fun containsValue(value: V): Boolean {
         val values = this.values
         for (i in values) {
             if (i == value) {
@@ -126,7 +125,8 @@ open class AVL<K : Comparable<K>, V> : Map<K, V> {
 
     fun remove(key: K) {
         if (containsKey(key)) {
-            root = manipulator.removeNode(root, key)
+            val currentRoot = root ?: return
+            root = manipulator.removeNode(currentRoot, key)
         }
     }
 
