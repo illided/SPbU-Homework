@@ -127,6 +127,8 @@ open class AVL<K : Comparable<K>, V> : Map<K, V> {
         if (containsKey(key)) {
             val currentRoot = root ?: return
             root = manipulator.removeNode(currentRoot, key)
+        } else {
+            throw IndexOutOfBoundsException("Item with this key does not exist")
         }
     }
 
