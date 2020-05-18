@@ -66,10 +66,6 @@ internal class AVLTest {
     }
 
     @Test
-    fun putAll() {
-    }
-
-    @Test
     fun remove() {
     }
 
