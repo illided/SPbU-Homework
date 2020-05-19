@@ -10,23 +10,22 @@ open class AVL<K : Comparable<K>, V> : Map<K, V> {
 
     private inner class Walker {
 
-        fun toSpecificNode(currentNode: Node<K, V>?, key: K, stopFun: (Node<K, V>) -> Boolean): Node<K, V>? {
+        fun toSpecificNode(
+            key: K,
+            stopFun: (Node<K, V>) -> Boolean,
+            currentNode: Node<K, V>? = root
+        ): Node<K, V>? {
             val leftChild = currentNode?.leftChild
             val rightChild = currentNode?.rightChild
             return if (currentNode == null || stopFun(currentNode)) {
                 currentNode
             } else if (key > currentNode.key && rightChild != null) {
-                toSpecificNode(rightChild, key, stopFun)
+                toSpecificNode(key, stopFun, rightChild)
             } else if (key < currentNode.key && leftChild != null) {
-                toSpecificNode(leftChild, key, stopFun)
+                toSpecificNode(key, stopFun, leftChild)
             } else {
                 null
             }
-        }
-
-        fun toSpecificNodeFromRoot(key: K, stopFun: (Node<K, V>) -> Boolean): Node<K, V>? {
-            val startingNode = root
-            return toSpecificNode(startingNode, key, stopFun)
         }
 
         fun <T> everywhereAndDo(
@@ -65,7 +64,7 @@ open class AVL<K : Comparable<K>, V> : Map<K, V> {
                     if (rightChild == null) {
                         outputNode = leftChild
                     } else {
-                        val localMin = walk.toSpecificNode(rightChild, key, { it.leftChild == null })
+                        val localMin = walk.toSpecificNode(key, { it.leftChild == null }, rightChild)
                         localMin?.rightChild = removeMin(rightChild)
                         localMin?.leftChild = leftChild
                         outputNode = localMin?.balance()
@@ -92,7 +91,7 @@ open class AVL<K : Comparable<K>, V> : Map<K, V> {
     override var size: Int = 0
 
     override fun containsKey(key: K): Boolean {
-        walk.toSpecificNodeFromRoot(key, { it.key == key }) ?: return false
+        walk.toSpecificNode(key, { it.key == key }) ?: return false
         return true
     }
 
@@ -107,7 +106,7 @@ open class AVL<K : Comparable<K>, V> : Map<K, V> {
     }
 
     override fun get(key: K): V? {
-        val node = walk.toSpecificNodeFromRoot(key, { it.key == key })
+        val node = walk.toSpecificNode(key, { it.key == key })
             ?: throw IndexOutOfBoundsException("Don't have this item in a set")
         return node.value
     }
