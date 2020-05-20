@@ -124,15 +124,13 @@ class HashTable<K : Comparable<K>, V>(
                 "Maximum length of conflict list: $maximumListLength"
     }
 
-    fun getStructuralString(): String {
-        var outputString = ""
-        for (i in arrayOfList.indices) {
-            outputString += "$i -> "
-            for (entry in arrayOfList[i]) {
-                outputString += "$entry"
+    override fun toString(): String {
+        var outputString = "{"
+        for (listOfEntry in arrayOfList){
+            for (entry in listOfEntry){
+                outputString += entry.toString()
             }
-            outputString += "\n"
         }
-        return outputString
+        return "$outputString}"
     }
 }
