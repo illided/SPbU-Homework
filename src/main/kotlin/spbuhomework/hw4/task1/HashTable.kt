@@ -14,9 +14,12 @@ class HashTable<K : Comparable<K>, V>(
 ) {
     private var arraySize: Int = DEFAULT_ARRAY_SIZE
         private set(value) {
-            require(arraySize >= 1) { "Hashtable array size cannot be less than 1" }
+            require(value >= 1) { "Hashtable array size cannot be less than 1" }
             field = value
         }
+
+    private var arrayOfList: Array<MutableList<Entry<K, V>>> = Array(arraySize) { mutableListOf<Entry<K, V>>() }
+
     var extendThreshold: Int = DEFAULT_EXTEND_THRESHOLD
         private set(value) {
             require(value >= 1) { "Hashtable extend threshold cannot be less than 1" }
@@ -45,7 +48,6 @@ class HashTable<K : Comparable<K>, V>(
     var size = 0
         private set
 
-    private var arrayOfList: Array<MutableList<Entry<K, V>>> = Array(arraySize) { mutableListOf<Entry<K, V>>() }
     val loadFactor: Double
         get() = size / ((arraySize * extendThreshold).toDouble())
 
