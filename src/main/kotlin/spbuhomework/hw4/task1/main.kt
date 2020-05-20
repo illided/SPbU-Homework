@@ -31,7 +31,10 @@ enum class Command(val index: String, val length: Int) {
     Exit("exit", WordNum.ONE_WORD);
 }
 
-fun findCommand(commandAsList: List<String>): Command? {
+fun findCommand(commandAsList: List<String>?): Command? {
+    if (commandAsList == null) {
+        return null
+    }
     for (command in Command.values()) {
         if (command.index == commandAsList[0] && command.length == commandAsList.size) {
             return command
@@ -63,26 +66,20 @@ fun main() {
     var currentInput: List<String>?
     var currentCommand: Command?
     val manipulator = HashTableManipulator()
-
     do {
         currentInput = readLine()?.split(" ")
-        if (currentInput == null || currentInput.isEmpty()) {
-            println("Wrong command input")
-        } else {
-            currentCommand = findCommand(currentInput)
-            manipulator.currentInput = currentInput
-
-            when (currentCommand) {
-                null -> println("Wrong command input")
-                Command.Add -> manipulator.add()
-                Command.Get -> manipulator.get()
-                Command.GetAll -> manipulator.getAll()
-                Command.Remove -> manipulator.remove()
-                Command.SynchronizeWithFile -> manipulator.synchronizeWithFile()
-                Command.GetStatisticAboutTable -> manipulator.getStatisticAboutTable()
-                Command.ChangeHashFunction -> manipulator.changeHashFunction()
-                Command.Exit -> manipulator.exit()
-            }
+        currentCommand = findCommand(currentInput)
+        manipulator.currentInput = currentInput ?: listOf()
+        when (currentCommand) {
+            null -> println("Wrong command input")
+            Command.Add -> manipulator.add()
+            Command.Get -> manipulator.get()
+            Command.GetAll -> manipulator.getAll()
+            Command.Remove -> manipulator.remove()
+            Command.SynchronizeWithFile -> manipulator.synchronizeWithFile()
+            Command.GetStatisticAboutTable -> manipulator.getStatisticAboutTable()
+            Command.ChangeHashFunction -> manipulator.changeHashFunction()
+            Command.Exit -> manipulator.exit()
         }
-    } while (currentInput?.get(0) != "exit")
+    } while (currentCommand != Command.Exit)
 }
