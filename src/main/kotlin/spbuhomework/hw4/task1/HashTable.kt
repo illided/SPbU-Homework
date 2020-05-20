@@ -126,8 +126,8 @@ class HashTable<K : Comparable<K>, V>(
 
     override fun toString(): String {
         var outputString = "{"
-        for (listOfEntry in arrayOfList){
-            for (entry in listOfEntry){
+        for (listOfEntry in arrayOfList) {
+            for (entry in listOfEntry) {
                 outputString += entry.toString()
             }
         }
