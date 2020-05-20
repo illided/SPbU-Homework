@@ -3,7 +3,7 @@ package spbuhomework.hw4.task1
 import java.io.File
 import java.io.FileNotFoundException
 
-class HashTableManipulator() {
+class HashTableManipulator {
     var hashTable = HashTable<String, String>(initialHashFunction = ::simpleHashFunction)
     var currentInput: List<String> = listOf()
 

@@ -2,16 +2,18 @@ package spbuhomework.hw4.task1
 
 import kotlin.math.abs
 
-const val DEFAULT_ARRAY_SIZE = 5
-const val DEFAULT_EXTEND_FACTOR = 2.0
-const val DEFAULT_EXTEND_THRESHOLD = 5
-
 class HashTable<K : Comparable<K>, V>(
     initialExtendThreshold: Int = DEFAULT_EXTEND_THRESHOLD,
     initialArraySize: Int = DEFAULT_ARRAY_SIZE,
     initialExtendFactor: Double = DEFAULT_EXTEND_FACTOR,
     initialHashFunction: (K) -> Int = { it.hashCode() }
 ) {
+    companion object {
+        const val DEFAULT_ARRAY_SIZE = 5
+        const val DEFAULT_EXTEND_FACTOR = 2.0
+        const val DEFAULT_EXTEND_THRESHOLD = 5
+    }
+
     private var arraySize: Int = DEFAULT_ARRAY_SIZE
         private set(value) {
             require(value >= 1) { "Hashtable array size cannot be less than 1" }

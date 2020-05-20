@@ -14,15 +14,21 @@ const val GREETINGS = "Hello! I am a HashTable. Here are some functions you can 
         "exit - exit the interactive mode"
 const val PRIME_NUMBER = 5.0
 
+object WordNum{
+    const val THREE_WORD = 3
+    const val TWO_WORD = 2
+    const val ONE_WORD = 1
+}
+
 enum class Command(val index: String, val length: Int) {
-    Add("add", 3),
-    Get("get", 2),
-    GetAll("getAll", 1),
-    Remove("remove", 2),
-    SynchronizeWithFile("sync", 1),
-    GetStatisticAboutTable("getStat", 1),
-    ChangeHashFunction("switch", 1),
-    Exit("exit", 1),
+    Add("add", WordNum.THREE_WORD),
+    Get("get", WordNum.TWO_WORD),
+    GetAll("getAll", WordNum.ONE_WORD),
+    Remove("remove", WordNum.TWO_WORD),
+    SynchronizeWithFile("sync", WordNum.ONE_WORD),
+    GetStatisticAboutTable("getStat", WordNum.ONE_WORD),
+    ChangeHashFunction("switch", WordNum.ONE_WORD),
+    Exit("exit", WordNum.ONE_WORD);
 }
 
 fun findCommand(commandAsList: List<String>): Command? {
@@ -77,7 +83,6 @@ fun main() {
                 Command.ChangeHashFunction -> manipulator.changeHashFunction()
                 Command.Exit -> manipulator.exit()
             }
-
         }
     } while (currentInput?.get(0) != "exit")
 }
