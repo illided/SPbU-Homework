@@ -35,12 +35,7 @@ fun findCommand(commandAsList: List<String>?): Command? {
     if (commandAsList == null) {
         return null
     }
-    for (command in Command.values()) {
-        if (command.index == commandAsList[0] && command.length == commandAsList.size) {
-            return command
-        }
-    }
-    return null
+    return Command.values().find { it.index == commandAsList[0] && it.length == commandAsList.size }
 }
 
 fun simpleHashFunction(input: String): Int {
