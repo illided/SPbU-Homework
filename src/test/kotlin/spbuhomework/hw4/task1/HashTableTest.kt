@@ -3,8 +3,6 @@ package spbuhomework.hw4.task1
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
-import java.lang.IllegalArgumentException
-import kotlin.math.pow
 
 internal class HashTableTest {
     @Test
@@ -106,7 +104,7 @@ internal class HashTableTest {
         }
         myHashTable.hashFunction = ::simpleHashFunction
         assertEquals("37", myHashTable.get("32"))
-        myHashTable.hashFunction = ::differentHashFunction
+        myHashTable.hashFunction = ::polynomialHashFunction
         assertEquals("69", myHashTable.get("64"))
     }
 
