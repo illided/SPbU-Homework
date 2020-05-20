@@ -14,7 +14,7 @@ const val GREETINGS = "Hello! I am a HashTable. Here are some functions you can 
         "exit - exit the interactive mode"
 const val PRIME_NUMBER = 5.0
 
-object WordNum{
+object WordNum {
     const val THREE_WORD = 3
     const val TWO_WORD = 2
     const val ONE_WORD = 1
