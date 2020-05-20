@@ -6,7 +6,6 @@ const val DEFAULT_ARRAY_SIZE = 5
 const val DEFAULT_EXTEND_FACTOR = 2.0
 const val DEFAULT_EXTEND_THRESHOLD = 5
 
-
 class HashTable<K : Comparable<K>, V>(
     initialExtendThreshold: Int = DEFAULT_EXTEND_THRESHOLD,
     initialArraySize: Int = DEFAULT_ARRAY_SIZE,
@@ -33,6 +32,7 @@ class HashTable<K : Comparable<K>, V>(
             field = value
             refill()
         }
+
     init {
         extendThreshold = initialExtendThreshold
         arraySize = initialArraySize
