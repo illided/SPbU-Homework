@@ -8,17 +8,19 @@ class Calculator(initialInputString: String) {
                 "|((?<=^..)\\([*-\\/\\+0-9 ()]+\\)(?= ))" +
                 "|\\d+" +
                 "|^[+-\\/*]"
+        private const val MAX_ARGUMENT_NUM = 3
     }
 
     private lateinit var root: Node
 
-    val result: Double
-        get() = root.value
+    var result: Double = 0.0
+    private set
 
     var inputString = ""
         set(value) {
             require("[+-/*() 0-9]+".toRegex().matches(value)) { "Invalid characters found" }
             root = generateTree(value)
+            result = root.value
             field = value
         }
 
@@ -41,7 +43,7 @@ class Calculator(initialInputString: String) {
         val listOfOperators = regex.findAll(
             inputString.removePrefix("(").removeSuffix(")")
         ).toList().map { it.value }
-        require(listOfOperators.size == 3 || listOfOperators.size == 1) { "Wrong number of arguments" }
+        require(listOfOperators.size == MAX_ARGUMENT_NUM || listOfOperators.size == 1) { "Wrong number of arguments" }
         return listOfOperators
     }
 
