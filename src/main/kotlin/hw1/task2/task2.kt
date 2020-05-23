@@ -34,10 +34,10 @@ fun main(args: Array<String>) {
             println("Answer: $answer")
         }
         "l" -> {
-            println("Answer: " + cyclicFactorial(number))
+            println("Answer: ${cyclicFactorial(number)}")
         }
         else -> {
-            println("Something went wrong")
+            println("Wrong operation")
         }
     }
 }
