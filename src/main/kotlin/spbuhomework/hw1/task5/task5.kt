@@ -1,3 +1,5 @@
+package spbuhomework.hw1.task5
+
 import java.io.File
 import java.io.FileNotFoundException
 
@@ -16,7 +18,7 @@ fun countNonBlanks(inputFilePath: String): Int {
 
 fun main() {
     try {
-        println("Answer: ${countNonBlanks("src/main/kotlin/hw1/task5/mainTest.txt")}")
+        println("Answer: ${countNonBlanks("src/main/kotlin/spbuhomework/hw1/task5/mainTest.txt")}")
     } catch (exception: FileNotFoundException) {
         println(exception.message)
     }
