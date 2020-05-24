@@ -6,7 +6,7 @@ fun getNumberOfInclusions(mainString: String, subString: String): Int {
     }
     var inclusions = 0
     for (i in 0..mainString.length - subString.length) {
-        if (mainString.slice(i until i+subString.length) == subString) {
+        if (mainString.slice(i until i + subString.length) == subString) {
             inclusions++
         }
     }
@@ -21,6 +21,6 @@ fun main(args: Array<String>) {
     if (mainString == null || subString == null) {
         println("Wrong input")
     } else {
-        print("Answer: ${getNumberOfInclusions(mainString, subString)}")
+        println("Answer: ${getNumberOfInclusions(mainString, subString)}")
     }
 }
