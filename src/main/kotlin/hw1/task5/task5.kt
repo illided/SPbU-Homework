@@ -14,14 +14,10 @@ fun countNonBlanks(inputFilePath: String): Int {
     return answer
 }
 
-fun main(args: Array<String>) {
-    var answer = -1
+fun main() {
     try {
-        answer = countNonBlanks("src/main/kotlin/hw1/task5/mainTest.txt")
+        println("Answer: ${countNonBlanks("src/main/kotlin/hw1/task5/mainTest.txt")}")
     } catch (exception: FileNotFoundException) {
         println(exception.message)
-    }
-    if (answer != -1) {
-        println("Answer: $answer")
     }
 }
