@@ -58,11 +58,26 @@ class Node {
         return result
     }
 
+    private fun getNumberOfWords(currentNode: Node): Int {
+        var result = 0
+        if (currentNode.isTerminated) {
+            result++
+        }
+        for (edge in currentNode.connectedEdges) {
+            result += getNumberOfWords(edge.neighbour)
+        }
+        return result
+    }
+
     fun getNumberOfPrefixes(input: String): Int {
-        return if (input.isEmpty()) {
+        if (input.isNotEmpty()) {
+            return findEdge(input[0])?.neighbour?.getNumberOfPrefixes(input.drop(1)) ?: 0
+        }
+        return getNumberOfWords(this)
+        /*return if (input.isEmpty()) {
             connectedEdges.size
         } else {
             findEdge(input[0])?.neighbour?.getNumberOfPrefixes(input.drop(1)) ?: 0
-        }
+        }*/
     }
 }
