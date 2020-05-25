@@ -7,8 +7,8 @@ import java.io.OutputStream
 class Trie : Serializable {
     private var root = Node()
 
-    var size = 0
-        private set
+    val size
+        get() = root.getNumberOfPrefixes("")
 
     fun isContains(input: String): Boolean = root.isContains(input)
 
@@ -17,7 +17,6 @@ class Trie : Serializable {
             false
         } else {
             root.appendNode(input)
-            size++
             true
         }
     }
@@ -27,7 +26,6 @@ class Trie : Serializable {
             false
         } else {
             root.removeAndCheckIfUseless(input)
-            size--
             true
         }
     }
@@ -48,12 +46,11 @@ class Trie : Serializable {
     override fun serialize(output: OutputStream) {
         val currentValues = values
         output.write(currentValues.joinToString(" ").toByteArray())
-        output.close()
     }
 
     override fun deserialize(input: InputStream) {
         root = Node()
-        val text = input.bufferedReader().use { it.readText() }.split(" ", "\n")
+        val text = input.bufferedReader().use { it.readText() }.split(" ", "\n").filter { it.isNotEmpty() }
         for (word in text) {
             if (word.isWord()) {
                 this.add(word)

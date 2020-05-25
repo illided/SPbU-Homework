@@ -5,6 +5,8 @@ class Node {
 
     private val connectedEdges: MutableList<Edge> = mutableListOf()
 
+    private var wordsWithPrefixNum = 0
+
     private var isTerminated = false
 
     private fun findEdge(char: Char): Edge? {
@@ -12,6 +14,7 @@ class Node {
     }
 
     fun appendNode(input: String) {
+        wordsWithPrefixNum++
         if (input.isEmpty()) {
             isTerminated = true
         } else {
@@ -33,6 +36,7 @@ class Node {
     }
 
     fun removeAndCheckIfUseless(input: String): Boolean {
+        wordsWithPrefixNum--
         return when {
             input.isEmpty() -> {
                 isTerminated = false
@@ -58,26 +62,10 @@ class Node {
         return result
     }
 
-    private fun getNumberOfWords(currentNode: Node): Int {
-        var result = 0
-        if (currentNode.isTerminated) {
-            result++
-        }
-        for (edge in currentNode.connectedEdges) {
-            result += getNumberOfWords(edge.neighbour)
-        }
-        return result
-    }
-
     fun getNumberOfPrefixes(input: String): Int {
         if (input.isNotEmpty()) {
             return findEdge(input[0])?.neighbour?.getNumberOfPrefixes(input.drop(1)) ?: 0
         }
-        return getNumberOfWords(this)
-        /*return if (input.isEmpty()) {
-            connectedEdges.size
-        } else {
-            findEdge(input[0])?.neighbour?.getNumberOfPrefixes(input.drop(1)) ?: 0
-        }*/
+        return wordsWithPrefixNum
     }
 }
