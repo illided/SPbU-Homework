@@ -1,0 +1,4 @@
+Here two tabs and two spaces between in each next line
+	  	
+	  	
+end of file
