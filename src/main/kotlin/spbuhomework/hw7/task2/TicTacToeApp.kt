@@ -1,0 +1,14 @@
+package spbuhomework.hw7.task2
+
+import javafx.stage.Stage
+import spbuhomework.hw7.task2.views.MainMenu
+import tornadofx.App
+
+const val SIDE_LENGTH = 3
+
+class TicTacToeApp: App(MainMenu::class){
+    override fun start(stage: Stage) {
+        stage.isResizable = false
+        super.start(stage)
+    }
+}
