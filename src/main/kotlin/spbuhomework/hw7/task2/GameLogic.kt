@@ -7,7 +7,7 @@ class ButtonTextChange(val coordinate: Pair<Int, Int>, val newText: Char) : FXEv
 
 class GameLogic : Controller() {
 
-    var haveWinner = false
+    var gameOver = false
     var lastKeyPressed = Pair(0, 0)
     private val buttonPressed = mutableListOf<Pair<Int, Int>>()
     var currentPlayer = GameModel.firstPlayer
@@ -20,13 +20,16 @@ class GameLogic : Controller() {
             currentPlayer.isMyTurn = false
             playerWaiting.isMyTurn = true
             currentPlayer = playerWaiting.also { playerWaiting = currentPlayer }
-            checkForWin()
+            checkForGameOver()
             update()
         }
     }
 
-    private fun checkForWin() {
-
+    private fun checkForGameOver() {
+        if (currentPlayer.myMoves.size + playerWaiting.myMoves.size == 9) {
+            gameOver = true
+            GameModel.winnerMessage = "Draw!"
+        }
     }
 
     private fun makeTurn() {
@@ -45,6 +48,11 @@ class GameLogic : Controller() {
         GameModel.firstPlayer.isMyTurn = true
         GameModel.firstPlayer.playerChar = 'X'
         GameModel.secondPlayer.playerChar = 'O'
+        for (x in 0 until SIDE_LENGTH) {
+            for (y in 0 until SIDE_LENGTH) {
+                fire(ButtonTextChange(Pair(x, y), ' '))
+            }
+        }
         update()
     }
 

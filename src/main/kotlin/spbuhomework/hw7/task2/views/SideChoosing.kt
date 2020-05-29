@@ -5,7 +5,7 @@ import spbuhomework.hw7.task2.GameModel
 import spbuhomework.hw7.task2.players.HumanPlayer
 import tornadofx.*
 
-class SideChoosing : View("My View") {
+class SideChoosing : View("TicTacToe") {
     override val root = stackpane {
         label("Choose side") {
             setPrefSize(400.0, 100.0)

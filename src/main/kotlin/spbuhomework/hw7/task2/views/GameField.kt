@@ -5,7 +5,7 @@ import spbuhomework.hw7.task2.GameLogic
 import spbuhomework.hw7.task2.SIDE_LENGTH
 import tornadofx.*
 
-class GameField : View("My View") {
+class GameField : View("TicTacToe") {
     override val root = vbox {
         for (y in 0 until SIDE_LENGTH) {
             hbox {
@@ -15,8 +15,8 @@ class GameField : View("My View") {
                         action {
                             fire(ButtonPushed(Pair(x, y)))
                             logic.update()
-                            if (logic.haveWinner) {
-                                this@GameField.replaceWith<WinScreen>(sizeToScene = true)
+                            if (logic.gameOver) {
+                                find<WinScreen>().openWindow()
                             }
                         }
                         subscribe<ButtonTextChange> {

@@ -9,13 +9,16 @@ class EasyBot : Player {
     override var isMyTurn: Boolean = false
 
     override fun triggerPressing(lastKeyPressed: Pair<Int, Int>) {
-        buttonPressed = List(9) {
+        val availableButtons = List(9) {
             Pair(
                 it % SIDE_LENGTH,
                 it / SIDE_LENGTH
             )
-        }.filter { !myMoves.contains(it) && !opponentMoves.contains(it) }.random()
-        buttonPressReceived = false
+        }.filter { !myMoves.contains(it) && !opponentMoves.contains(it) }
+        if (availableButtons.isNotEmpty()) {
+            buttonPressed = availableButtons.random()
+            buttonPressReceived = false
+        }
     }
 
     override var buttonPressed: Pair<Int, Int> = Pair(0, 0)
