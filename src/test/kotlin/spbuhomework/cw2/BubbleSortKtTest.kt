@@ -55,7 +55,7 @@ internal class BubbleSortKtTest {
     }
 
     @Test
-    fun bubbleSort_nonEmptySortedUserClassArray_sameArrayAsOutput() {
+    fun bubbleSort_nonEmptySortedPairArrayWithUserComparator_sameArrayAsOutput() {
         assertArrayEquals(
             arrayOf(Pair(1, 1), Pair(2, 2), Pair(3, 1)),
             bubbleSort(
