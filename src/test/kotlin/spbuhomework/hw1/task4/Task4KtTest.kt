@@ -7,31 +7,31 @@ internal class Task4KtTest {
 
     @Test
     fun isPalindrome_palindromeStringInput_trueAsOutput() {
-        assertEquals(true, isPalindrome("racecar"))
+        assertTrue(isPalindrome("racecar"))
     }
 
     @Test
     fun isPalindrome_longerPalindromeStringInput_trueAsOutput() {
-        assertEquals(true, isPalindrome("Abbbba ded abbbbA"))
+        assertTrue(isPalindrome("Abbbba ded abbbbA"))
     }
 
     @Test
     fun isPalindrome_nonPalindromeStringInput_falseAsOutput() {
-        assertEquals(false, isPalindrome("Kotlin"))
+        assertFalse(isPalindrome("Kotlin"))
     }
 
     @Test
     fun isPalindrome_longerNonPalindromeStringInput_falseAsOutput() {
-        assertEquals(false, isPalindrome("This string is not a palindrome"))
+        assertFalse(isPalindrome("This string is not a palindrome"))
     }
 
     @Test
     fun isPalindrome_oneCharacterInput_trueAsOutput() {
-        assertEquals(true, isPalindrome("*"))
+        assertTrue(isPalindrome("*"))
     }
 
     @Test
     fun isPalindrome_emptyString_trueAsOutput() {
-        assertEquals(true, isPalindrome(""))
+        assertTrue(isPalindrome(""))
     }
 }
