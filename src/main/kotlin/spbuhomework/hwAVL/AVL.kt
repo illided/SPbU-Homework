@@ -2,7 +2,7 @@ package spbuhomework.hwAVL
 
 import kotlin.IndexOutOfBoundsException
 
-open class AVL<K : Comparable<K>, V> : Map<K, V> {
+class AVL<K : Comparable<K>, V> : Map<K, V> {
 
     private var root: Node<K, V>? = null
     private val walk = Walker()
@@ -19,12 +19,10 @@ open class AVL<K : Comparable<K>, V> : Map<K, V> {
             val rightChild = currentNode?.rightChild
             return if (currentNode == null || stopFun(currentNode)) {
                 currentNode
-            } else if (key > currentNode.key && rightChild != null) {
+            } else if (key > currentNode.key) {
                 toSpecificNode(key, stopFun, rightChild)
-            } else if (key < currentNode.key && leftChild != null) {
-                toSpecificNode(key, stopFun, leftChild)
             } else {
-                null
+                toSpecificNode(key, stopFun, leftChild)
             }
         }
 
@@ -96,13 +94,7 @@ open class AVL<K : Comparable<K>, V> : Map<K, V> {
     }
 
     override fun containsValue(value: V): Boolean {
-        val values = this.values
-        for (i in values) {
-            if (i == value) {
-                return true
-            }
-        }
-        return false
+        return values.contains(value)
     }
 
     override fun get(key: K): V? {

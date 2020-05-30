@@ -8,7 +8,7 @@ class Node<K : Comparable<K>, V>(
     var leftChild: Node<K, V>? = null,
     var rightChild: Node<K, V>? = null
 ) {
-    var height: Int = 0
+    private var height: Int = 0
 
     private fun updateHeight() {
         val leftChildHeight = leftChild?.height ?: 0
@@ -66,8 +66,7 @@ class Node<K : Comparable<K>, V>(
             }
             return outputNode
         }
-        outputNode = this
-        return outputNode
+        return this
     }
 
     fun toEntry() = Entry(key, value)
