@@ -1,6 +1,6 @@
 package spbuhomework.hw2.task2
 
-inline fun <reified T> leaveTheFirstRightInclusions(inputArray: Array<T>): Array<T> where T: Comparable<T>{
+inline fun <reified T> leaveTheFirstRightInclusions(inputArray: Array<T>): Array<T> where T : Comparable<T> {
     return inputArray.reversed().toSet().reversed().toTypedArray()
 }
 
