@@ -8,26 +8,31 @@ internal class Task1KtTest {
 
     @Test
     fun getNumberOfExcessSymbols_shortStringWithExcessX_nonZeroOutput() {
-        assertEquals(1, getNumberOfExcessSymbols("xxxxex"))
+        assertEquals(2, getNumberOfExcessSymbols("xxxxex"))
     }
 
     @Test
     fun getNumberOfExcessSymbols_longStringWithExcessX_nonZeroOutput() {
-        assertEquals(3, getNumberOfExcessSymbols("xexexefxxxxevevnexxxxxaxaxa"))
+        assertEquals(5, getNumberOfExcessSymbols("xexexefxxxxevevnexxxxxaxaxa"))
     }
 
     @Test
     fun getNumberOfExcessSymbols_shortStringWithoutExcessX_zeroOutput() {
-        assertEquals(0, getNumberOfExcessSymbols("xxxexexe"))
+        assertEquals(0, getNumberOfExcessSymbols("xxexexe"))
     }
 
     @Test
     fun getNumberOfExcessSymbols_longStringWithoutExcessX_zeroOutput() {
-        assertEquals(0, getNumberOfExcessSymbols("xxxeexexexexexexexeaaxaxaxaxax"))
+        assertEquals(0, getNumberOfExcessSymbols("xxeexexexexexexexeaaxaxaxaxax"))
     }
 
     @Test
     fun getNumberOfExcessSymbols_emptyString_zeroOutput() {
         assertEquals(0, getNumberOfExcessSymbols(""))
+    }
+
+    @Test
+    fun getNumberOfExcessSymbols_onlyX_correctOutput() {
+        assertEquals(3, getNumberOfExcessSymbols("xxxxx"))
     }
 }
