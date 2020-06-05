@@ -32,7 +32,7 @@ class HashTableManipulator(inputFilePath: String) {
     fun get() {
         try {
             println("Search result: " + hashTable.get(currentInput[1]))
-        } catch (exception: IndexOutOfBoundsException) {
+        } catch (exception: IllegalArgumentException) {
             println("Hashtable does not have an item with this key")
         }
     }
@@ -43,7 +43,7 @@ class HashTableManipulator(inputFilePath: String) {
         try {
             hashTable.remove(currentInput[1])
             println("Item was removed!")
-        } catch (exception: IndexOutOfBoundsException) {
+        } catch (exception: IllegalArgumentException) {
             println("Hashtable does not have an item with this key")
         }
     }

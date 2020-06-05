@@ -89,7 +89,7 @@ class HashTable<K : Comparable<K>, V>(
     }
 
     fun get(key: K): V? {
-        return find(key)?.value ?: throw IndexOutOfBoundsException("Hashtable doesn't have an item with this key")
+        return find(key)?.value ?: throw IllegalArgumentException("Hashtable doesn't have an item with this key")
     }
 
     fun isContains(key: K): Boolean {
@@ -117,7 +117,7 @@ class HashTable<K : Comparable<K>, V>(
             arrayOfList[getHash(key)].remove(find(key))
             size--
         } else {
-            throw IndexOutOfBoundsException("Don't have an item with this key in hashtable")
+            throw IllegalArgumentException("Don't have an item with this key in hashtable")
         }
     }
 
