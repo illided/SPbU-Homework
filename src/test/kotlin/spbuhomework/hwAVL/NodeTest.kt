@@ -35,8 +35,14 @@ internal class NodeTest {
     }
 
     @Test
-    fun toEntry_nodeWithDataAsInput_entryAsOutput() {
+    fun toEntry_nodeWithDataAsInput_entryWithCorrectKeyAsOutput() {
         val myEntry = Node(5, "Hello").toEntry()
-        assertTrue(myEntry.key == 5 && myEntry.value == "Hello")
+        assertEquals(5, myEntry.key)
+    }
+
+    @Test
+    fun toEntry_nodeWithDataAsInput_entryWithCorrectValueAsOutput() {
+        val myEntry = Node(5, "Hello").toEntry()
+        assertEquals("Hello", myEntry.value)
     }
 }

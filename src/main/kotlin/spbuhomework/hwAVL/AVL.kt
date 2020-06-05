@@ -88,24 +88,17 @@ class AVL<K : Comparable<K>, V> : Map<K, V> {
 
     override var size: Int = 0
 
-    override fun containsKey(key: K): Boolean {
-        walk.toSpecificNode(key, { it.key == key }) ?: return false
-        return true
-    }
+    override fun containsKey(key: K): Boolean = walk.toSpecificNode(key, { it.key == key }) != null
 
-    override fun containsValue(value: V): Boolean {
-        return values.contains(value)
-    }
+    override fun containsValue(value: V): Boolean = values.contains(value)
 
     override fun get(key: K): V? {
         val node = walk.toSpecificNode(key, { it.key == key })
-            ?: throw IndexOutOfBoundsException("Don't have this item in a set")
+            ?: throw IndexOutOfBoundsException("Don't have this item in AVL")
         return node.value
     }
 
-    override fun isEmpty(): Boolean {
-        return size == 0
-    }
+    override fun isEmpty(): Boolean = size == 0
 
     fun put(key: K, value: V) {
         if (!containsKey(key)) {
@@ -116,7 +109,7 @@ class AVL<K : Comparable<K>, V> : Map<K, V> {
 
     fun remove(key: K) {
         if (containsKey(key)) {
-            val currentRoot = root ?: return
+            val currentRoot = root ?: throw IndexOutOfBoundsException("Item can not be removed from empty AVL")
             root = manipulator.removeNode(currentRoot, key)
         } else {
             throw IndexOutOfBoundsException("Item with this key does not exist")
@@ -129,7 +122,8 @@ class AVL<K : Comparable<K>, V> : Map<K, V> {
             val currentRoot = root ?: return entries
             walk.everywhereAndDo(
                 currentRoot,
-                { node: Node<K, V>, entries: MutableSet<Entry<K, V>>? -> entries?.add(node.toEntry()) }, entries
+                { node: Node<K, V>, currentEntries: MutableSet<Entry<K, V>>? -> currentEntries?.add(node.toEntry()) },
+                entries
             )
             return entries.toSet()
         }
