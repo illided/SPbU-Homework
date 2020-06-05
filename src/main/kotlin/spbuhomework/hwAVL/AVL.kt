@@ -27,19 +27,16 @@ class AVL<K : Comparable<K>, V> : Map<K, V> {
         }
 
         fun <T> everywhereAndDo(
-            currentNode: Node<K, V>,
+            currentNode: Node<K, V>?,
             action: (Node<K, V>, T?) -> Unit,
             additional: T? = null
         ) {
-            val leftChild = currentNode.leftChild
-            if (leftChild != null) {
-                everywhereAndDo(leftChild, action, additional)
+            if (currentNode == null) {
+                return
             }
+            everywhereAndDo(currentNode.leftChild, action, additional)
             action(currentNode, additional)
-            val rightChild = currentNode.rightChild
-            if (rightChild != null) {
-                everywhereAndDo(rightChild, action, additional)
-            }
+            everywhereAndDo(currentNode.rightChild, action, additional)
         }
     }
 
@@ -109,8 +106,8 @@ class AVL<K : Comparable<K>, V> : Map<K, V> {
 
     fun remove(key: K) {
         if (containsKey(key)) {
-            val currentRoot = root ?: throw IndexOutOfBoundsException("Item can not be removed from empty AVL")
-            root = manipulator.removeNode(currentRoot, key)
+            val currentRoot = root
+            root = currentRoot?.let { manipulator.removeNode(it, key) }
         } else {
             throw IndexOutOfBoundsException("Item with this key does not exist")
         }
@@ -119,7 +116,7 @@ class AVL<K : Comparable<K>, V> : Map<K, V> {
     override val entries: Set<Map.Entry<K, V>>
         get() {
             val entries = emptySet<Entry<K, V>>().toMutableSet()
-            val currentRoot = root ?: return entries
+            val currentRoot = root
             walk.everywhereAndDo(
                 currentRoot,
                 { node: Node<K, V>, currentEntries: MutableSet<Entry<K, V>>? -> currentEntries?.add(node.toEntry()) },
@@ -130,7 +127,7 @@ class AVL<K : Comparable<K>, V> : Map<K, V> {
     override val keys: Set<K>
         get() {
             val keys = emptySet<K>().toMutableSet()
-            val currentRoot = root ?: return keys
+            val currentRoot = root
             walk.everywhereAndDo(
                 currentRoot,
                 { node: Node<K, V>, set: MutableSet<K>? -> set?.add(node.key) }, keys
@@ -140,7 +137,7 @@ class AVL<K : Comparable<K>, V> : Map<K, V> {
     override val values: Collection<V>
         get() {
             val values = emptyList<V>().toMutableList()
-            val currentRoot = root ?: return values
+            val currentRoot = root
             walk.everywhereAndDo(
                 currentRoot,
                 { node: Node<K, V>, set: MutableList<V>? -> set?.add(node.value) }, values
