@@ -33,7 +33,7 @@ internal class HashTableTest {
     @Test
     fun get_emptyHashTable_exceptionThrown() {
         val myHashTable = HashTable<String, String>()
-        assertThrows(IndexOutOfBoundsException::class.java) {
+        assertThrows(IllegalArgumentException::class.java) {
             myHashTable.get("two number 9s, a number 9 large, a number 6 with extra dip...")
         }
     }
@@ -45,7 +45,7 @@ internal class HashTableTest {
             myHashTable.put(i.toString(), i.toString())
         }
         myHashTable.put("Kotlin", "is cool")
-        assertThrows(IndexOutOfBoundsException::class.java) {
+        assertThrows(IllegalArgumentException::class.java) {
             myHashTable.get("Java")
         }
     }
@@ -91,7 +91,7 @@ internal class HashTableTest {
     @Test
     fun remove_itemDoesNotExist_exceptionThrown() {
         val myHashTable = HashTable<String, String>()
-        assertThrows(IndexOutOfBoundsException::class.java) {
+        assertThrows(IllegalArgumentException::class.java) {
             myHashTable.remove("Hello!")
         }
     }
