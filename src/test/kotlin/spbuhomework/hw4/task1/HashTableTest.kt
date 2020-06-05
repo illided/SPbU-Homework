@@ -102,10 +102,7 @@ internal class HashTableTest {
         for (i in 1..100) {
             myHashTable.put(i.toString(), (i + 5).toString())
         }
-        myHashTable.hashFunction = ::simpleHashFunction
-        assertEquals("37", myHashTable.get("32"))
-        myHashTable.hashFunction = ::polynomialHashFunction
-        assertEquals("69", myHashTable.get("64"))
+        myHashTable.currentHasher = SimpleHasher()
+        assertEquals(100, myHashTable.size)
     }
-
 }

@@ -1,75 +1,82 @@
 package spbuhomework.hw4.task1
 
-import java.io.File
 import java.io.FileNotFoundException
+import kotlin.math.pow
 
-class HashTableManipulator {
-    var hashTable = HashTable<String, String>(initialHashFunction = ::simpleHashFunction)
+class HashTableManipulator(inputFilePath: String) {
+    private var hashTable = HashTable<String, String>(initialHasher = SimpleHasher())
     var currentInput: List<String> = listOf()
+    private var inputFileContent: List<String> =
+        {}.javaClass.classLoader.getResource(inputFilePath)?.readText()?.split("\n")
+            ?: throw FileNotFoundException("File does not exist or have different path")
 
-    private fun loadFromFile(inputFilePath: String, hashFunction: (String) -> Int): HashTable<String, String> {
-        val hashTableFromFile = HashTable<String, String>(initialHashFunction = hashFunction)
-        if (!File(inputFilePath).exists()) {
-            throw FileNotFoundException("File does not exist or have different path")
-        }
+    private fun loadFromFile(): HashTable<String, String> {
+        val hashTableFromFile = HashTable<String, String>(initialHasher = hashTable.currentHasher)
         var entry: List<String>
-        File(inputFilePath).forEachLine {
-            entry = it.split(" ")
+        for (line in inputFileContent) {
+            entry = line.split(" ")
+            require(entry.size == 2) { "Illegal number of arguments in file line" }
             hashTableFromFile.put(entry[0], entry[1])
         }
         return hashTableFromFile
     }
 
     fun add() {
-        if (hashTable.isContains(currentInput[1])) {
-            println("Hashtable already have an item with this key")
-        } else {
-            hashTable.put(currentInput[1], currentInput[2])
+        if (hashTable.put(currentInput[1], currentInput[2])) {
             println("Item was added!")
+        } else {
+            println("Hashtable already have an item with this key")
         }
     }
 
     fun get() {
-        if (hashTable.isContains(currentInput[1])) {
+        try {
             println("Search result: " + hashTable.get(currentInput[1]))
-        } else {
+        } catch (exception: IndexOutOfBoundsException) {
             println("Hashtable does not have an item with this key")
         }
     }
 
-    fun getAll() {
-        println(hashTable.toString())
-    }
+    fun getAll() = println(hashTable.toString())
 
     fun remove() {
-        if (hashTable.isContains(currentInput[1])) {
+        try {
             hashTable.remove(currentInput[1])
             println("Item was removed!")
-        } else {
+        } catch (exception: IndexOutOfBoundsException) {
             println("Hashtable does not have an item with this key")
         }
     }
 
     fun synchronizeWithFile() {
-        hashTable = loadFromFile(DEFAULT_FILE_PATH, hashTable.hashFunction)
+        hashTable = loadFromFile()
         println("${hashTable.size} entries was loaded")
     }
 
-    fun getStatisticAboutTable() {
-        println(hashTable.getStatisticString())
-    }
+    fun getStatisticAboutTable() = println(hashTable.getStatisticString())
 
     fun changeHashFunction() {
-        if (hashTable.hashFunction == ::simpleHashFunction) {
-            hashTable.hashFunction = ::polynomialHashFunction
+        if (hashTable.currentHasher is SimpleHasher) {
+            hashTable.currentHasher = PolynomialHasher()
             println("Hash function was changed. Current hash function: polynomial")
         } else {
-            hashTable.hashFunction = ::simpleHashFunction
+            hashTable.currentHasher = SimpleHasher()
             println("Hash function was changed. Current hash function: simple")
         }
     }
 
-    fun exit() {
-        println("Goodbye!")
+    fun exit() = println("Goodbye!")
+}
+
+class SimpleHasher : Hasher<String> {
+    override fun hashFunction(input: String): Int = input.map { it.toInt() }.sum()
+}
+
+class PolynomialHasher : Hasher<String> {
+    companion object {
+        private const val PRIME_NUMBER = 5.0
     }
+
+    override fun hashFunction(input: String): Int =
+        input.mapIndexed { index, c -> c.toInt() * (PRIME_NUMBER).pow(index) }.sum().toInt()
 }

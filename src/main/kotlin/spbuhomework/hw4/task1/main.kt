@@ -1,8 +1,6 @@
 package spbuhomework.hw4.task1
 
-import kotlin.math.pow
-
-const val DEFAULT_FILE_PATH = "./src/main/kotlin/spbuhomework/hw4/task1/text.txt"
+const val DEFAULT_FILE_PATH = "spbuhomework/hw4/task1/"
 const val GREETINGS = "Hello! I am a HashTable. Here are some functions you can do:\n" +
         "add <key> <value> - Add entry to the hashtable\n" +
         "get <key> - Search for entry with the specific key\n" +
@@ -12,7 +10,6 @@ const val GREETINGS = "Hello! I am a HashTable. Here are some functions you can 
         "getStat - Get statistics about the current state of the hashtable\n" +
         "switch - Switch to the other hash function (there are simple and polynomial)\n" +
         "exit - exit the interactive mode"
-const val PRIME_NUMBER = 5.0
 
 object WordNum {
     const val THREE_WORD = 3
@@ -35,46 +32,32 @@ fun findCommand(commandAsList: List<String>?): Command? {
     if (commandAsList == null) {
         return null
     }
-    return Command.values().find { it.index == commandAsList[0] && it.length == commandAsList.size }
-}
-
-fun simpleHashFunction(input: String): Int {
-    var hash = 0
-    for (symbol in input) {
-        hash += symbol.toInt()
-    }
-    return hash
-}
-
-fun polynomialHashFunction(input: String): Int {
-    var hash = 0
-    var index = 0
-    for (symbol in input) {
-        hash += (symbol.toInt() * (PRIME_NUMBER).pow(index)).toInt()
-        index++
-    }
-    return hash
+    return Command.values().find { it.length == commandAsList.size && it.index == commandAsList[0] }
 }
 
 fun main() {
     println(GREETINGS)
     var currentInput: List<String>?
     var currentCommand: Command?
-    val manipulator = HashTableManipulator()
+    val manipulator = HashTableManipulator(DEFAULT_FILE_PATH + "text.txt")
     do {
         currentInput = readLine()?.split(" ")
         currentCommand = findCommand(currentInput)
-        manipulator.currentInput = currentInput ?: listOf()
-        when (currentCommand) {
-            null -> println("Wrong command input")
-            Command.Add -> manipulator.add()
-            Command.Get -> manipulator.get()
-            Command.GetAll -> manipulator.getAll()
-            Command.Remove -> manipulator.remove()
-            Command.SynchronizeWithFile -> manipulator.synchronizeWithFile()
-            Command.GetStatisticAboutTable -> manipulator.getStatisticAboutTable()
-            Command.ChangeHashFunction -> manipulator.changeHashFunction()
-            Command.Exit -> manipulator.exit()
+        if (currentCommand != null && currentInput != null) {
+            manipulator.currentInput = currentInput
+            when (currentCommand) {
+                null -> println("Wrong command input")
+                Command.Add -> manipulator.add()
+                Command.Get -> manipulator.get()
+                Command.GetAll -> manipulator.getAll()
+                Command.Remove -> manipulator.remove()
+                Command.SynchronizeWithFile -> manipulator.synchronizeWithFile()
+                Command.GetStatisticAboutTable -> manipulator.getStatisticAboutTable()
+                Command.ChangeHashFunction -> manipulator.changeHashFunction()
+                Command.Exit -> manipulator.exit()
+            }
+        } else {
+            println("Wrong command")
         }
     } while (currentCommand != Command.Exit)
 }
