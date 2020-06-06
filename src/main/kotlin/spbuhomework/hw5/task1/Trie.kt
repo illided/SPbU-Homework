@@ -5,7 +5,7 @@ import java.io.InputStream
 import java.io.OutputStream
 
 class Trie : Serializable {
-    private var root = Node()
+    private val root = Node()
 
     val size
         get() = root.getNumberOfPrefixes("")
@@ -44,12 +44,12 @@ class Trie : Serializable {
     }
 
     override fun serialize(output: OutputStream) {
-        val currentValues = values
-        output.write(currentValues.joinToString(" ").toByteArray())
+        /*val currentValues = values
+        output.write(currentValues.joinToString(" ").toByteArray())*/
     }
 
     override fun deserialize(input: InputStream) {
-        root = Node()
+        /*root = Node()
         val text = input.bufferedReader().use { it.readText() }.split(" ", "\n").filter { it.isNotEmpty() }
         for (word in text) {
             if (word.isWord()) {
@@ -57,6 +57,6 @@ class Trie : Serializable {
             } else {
                 throw IOException("Wrong characters in input stream")
             }
-        }
+        }*/
     }
 }
