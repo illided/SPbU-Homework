@@ -27,6 +27,17 @@ internal class AVLTest {
     }
 
     @Test
+    fun getSize_someDataAddedAndSomeDeleted_rightSizeAsOutput() {
+        val myAVL = AVL<Int, Int>()
+        for (i in 1..10) {
+            myAVL.put(i, i + 5)
+        }
+        myAVL.remove(7)
+        myAVL.remove(8)
+        assertEquals(8, myAVL.size)
+    }
+
+    @Test
     fun getSize_emptyAvl_zeroAsOutput() {
         val myAvl = AVL<Int, Int>()
         assertEquals(0, myAvl.size)
