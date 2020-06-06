@@ -7,14 +7,20 @@ import org.junit.jupiter.api.Assertions.*
 internal class NumberOperandTest {
 
     @Test
-    fun getOperandString_doubleAsValue_correctOutput() {
-        val numberOperand = NumberOperand(80.0)
-        assertEquals("80.0", numberOperand.operandString)
+    fun evaluate_someValue_sameValueOutput() {
+        val myNumberOperand = NumberOperand(56.0)
+        assertEquals(56.0, myNumberOperand.evaluate())
     }
 
     @Test
-    fun getValue_doubleAsValue_correctOutput() {
-        val numberOperand = NumberOperand(80.0)
-        assertEquals(80.0, numberOperand.value)
+    fun testToString_someValue_sameValueButStringAsOutput() {
+        val myNumberOperand = NumberOperand(56.0)
+        assertEquals("56.0", myNumberOperand.toString())
+    }
+
+    @Test
+    fun getChildrenList_someValue_emptyListAsOutput() {
+        val myNumberOperand = NumberOperand(37.0)
+        assertEquals(listOf<Node>(), myNumberOperand.childrenList)
     }
 }

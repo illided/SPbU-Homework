@@ -23,11 +23,4 @@ internal class CalculatorTest {
         val calculator = Calculator("(- (/ (* (+ 5 3) (+ 1 1)) (+ 2 2)) 3)")
         assertEquals(1.0, calculator.result)
     }
-
-    @Test
-    fun setInputString_stringChanged_correctOutput() {
-        val calculator = Calculator("1")
-        calculator.inputString = "+ 5 5"
-        assertEquals(10.0, calculator.result)
-    }
 }

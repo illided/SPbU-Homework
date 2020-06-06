@@ -1,11 +1,10 @@
 package spbuhomework.hw4.task2
 
-class NumberOperand(override val value: Double) : Node {
-    override val operandString: String
-        get() = value.toString()
-
-    override fun print(): List<Node> {
-        print("$operandString ")
-        return listOf()
+class NumberOperand(private val value: Double) : Node {
+    override fun evaluate() = value
+    override fun toString(): String {
+        return value.toString()
     }
+
+    override val childrenList: List<Node> = listOf()
 }

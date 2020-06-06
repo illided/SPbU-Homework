@@ -1,63 +1,59 @@
 package spbuhomework.hw4.task2
 
-class Calculator(initialInputString: String) {
+class Calculator(expression: String) {
 
     companion object {
-        private const val OPERATIONS = "+-/*"
-        private val REGEX_FOR_EVALUATING_ARGUMENTS = ("((?<!^..)\\([*-\\/\\+0-9 ()]+\\)(?=\$))" +
-                "|((?<=^..)\\([*-\\/\\+0-9 ()]+\\)(?= ))" +
-                "|\\d+" +
-                "|^[+-\\/*]").toRegex()
-        private const val MAX_ARGUMENT_NUM = 3
+        private val REGEX_FOR_EVALUATING_ARGUMENTS =
+            ("(?<!^..)(\\([*-\\/\\\\+0-9 ()]+\\))(?=\$)" +
+                    "|((?<=^..)(\\([*-\\/\\\\+0-9 ()]+\\))(?= (\\d\$|\\([+-\\/*])))" +
+                    "|\\d+" +
+                    "|^[+-\\/*]").toRegex()
+        private const val ONE_WORDED_ARGUMENT = 1
+        private const val THREE_WORDED_ARGUMENT = 3
+        private val POSSIBLE_ARGUMENT_NUM_FOR_OPERATIONS = arrayOf(ONE_WORDED_ARGUMENT, THREE_WORDED_ARGUMENT)
     }
 
-    private lateinit var root: Node
+    private var root: Node
 
     val result: Double
-    get() = root.value
-
-    var inputString = ""
-        set(value) {
-            require("[+-/*() 0-9]+".toRegex().matches(value)) { "Invalid characters found" }
-            root = generateTree(value)
-            field = value
-        }
+        get() = root.evaluate()
 
     init {
-        inputString = initialInputString
+        root = generateTree(expression)
     }
 
     private fun generateTree(input: String): Node {
         require(input.isNotEmpty()) { "Wrong command input" }
-        val formattedInput = getListOfOperatorsInputs(input)
-        return if (OPERATIONS.contains(formattedInput[0])) {
-            Operator(formattedInput[0], generateTree(formattedInput[1]), generateTree(formattedInput[2]))
+
+        val formattedInput = REGEX_FOR_EVALUATING_ARGUMENTS.findAll(
+            input.removePrefix("(").removeSuffix(")")
+        ).toList().map { it.value }
+        require(POSSIBLE_ARGUMENT_NUM_FOR_OPERATIONS.contains(formattedInput.size)) { "Wrong number of arguments" }
+
+        return if (formattedInput.size == THREE_WORDED_ARGUMENT) {
+            val (operatorIndex, leftExpression, rightExpression) = formattedInput
+            Operator(operatorIndex, generateTree(leftExpression), generateTree(rightExpression))
         } else {
-            NumberOperand(formattedInput[0].toDouble())
+            val numberValue = formattedInput[0]
+            NumberOperand(numberValue.toDouble())
         }
     }
 
-    private fun getListOfOperatorsInputs(inputString: String): List<String> {
-        val regex = REGEX_FOR_EVALUATING_ARGUMENTS
-        val listOfOperators = regex.findAll(
-            inputString.removePrefix("(").removeSuffix(")")
-        ).toList().map { it.value }
-        require(listOfOperators.size == MAX_ARGUMENT_NUM || listOfOperators.size == 1) { "Wrong number of arguments" }
-        return listOfOperators
-    }
-
-    fun print() {
+    override fun toString(): String {
         val frontElements: MutableList<Node> = mutableListOf(root)
         val secondFrontElements: MutableList<Node> = mutableListOf()
+        val stringList: MutableList<String> = mutableListOf()
         while (frontElements.isNotEmpty() || secondFrontElements.isNotEmpty()) {
             if (frontElements.isNotEmpty()) {
-                secondFrontElements.addAll(frontElements[0].print())
+                stringList.add(frontElements[0].toString())
+                secondFrontElements.addAll(frontElements[0].childrenList)
                 frontElements.removeAt(0)
             } else {
-                println()
+                stringList.add("\n")
                 frontElements.addAll(secondFrontElements)
                 secondFrontElements.clear()
             }
         }
+        return stringList.joinToString(" ")
     }
 }
