@@ -13,10 +13,12 @@ class GameField : View("TicTacToe") {
                     button {
                         setPrefSize(100.0, 100.0)
                         action {
-                            fire(ButtonPushed(Pair(x, y)))
-                            logic.update()
-                            if (logic.gameOver) {
-                                find<WinScreen>().openWindow()
+                            if (!logic.gameOver) {
+                                fire(ButtonPushed(Pair(x, y)))
+                                logic.update()
+                                if (logic.gameOver) {
+                                    find<WinScreen>().openWindow()
+                                }
                             }
                         }
                         subscribe<ButtonTextChange> {

@@ -3,7 +3,7 @@ package spbuhomework.hw7.task2.players
 interface Player {
     var playerChar: Char
     var isMyTurn: Boolean
-    fun triggerPressing(lastKeyPressed: Pair<Int, Int>)
+    fun triggerPressing()
     var buttonPressReceived: Boolean
     var buttonPressed: Pair<Int, Int>
     var myMoves: MutableList<Pair<Int, Int>>

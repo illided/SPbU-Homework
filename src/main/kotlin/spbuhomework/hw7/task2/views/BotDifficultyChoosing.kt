@@ -3,6 +3,7 @@ package spbuhomework.hw7.task2.views
 import javafx.geometry.Pos
 import spbuhomework.hw7.task2.GameModel
 import spbuhomework.hw7.task2.players.EasyBot
+import spbuhomework.hw7.task2.players.HardBot
 import tornadofx.*
 
 class BotDifficultyChoosing : View("TicTacToe") {
@@ -15,6 +16,13 @@ class BotDifficultyChoosing : View("TicTacToe") {
                 setPrefSize(400.0, 100.0)
                 action {
                     GameModel.opponent = EasyBot()
+                    toNextView()
+                }
+            }
+            button("Hard") {
+                setPrefSize(400.0, 100.0)
+                action {
+                    GameModel.opponent = HardBot()
                     toNextView()
                 }
             }

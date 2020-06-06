@@ -8,7 +8,7 @@ class EasyBot : Player {
 
     override var isMyTurn: Boolean = false
 
-    override fun triggerPressing(lastKeyPressed: Pair<Int, Int>) {
+    override fun triggerPressing() {
         val availableButtons = List(9) {
             Pair(
                 it % SIDE_LENGTH,
