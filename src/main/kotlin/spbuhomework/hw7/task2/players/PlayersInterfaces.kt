@@ -9,6 +9,6 @@ interface Player {
     val opponentMoves: MutableList<Pair<Int, Int>>
 }
 
-interface Bot: Player{
+interface Bot : Player {
     fun triggerPressing()
 }
