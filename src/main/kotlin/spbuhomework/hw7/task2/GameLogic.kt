@@ -4,9 +4,7 @@ import tornadofx.Controller
 import tornadofx.FXEvent
 
 class ButtonTextChange(val coordinate: Pair<Int, Int>, val newText: Char) : FXEvent()
-
 class GameLogic : Controller() {
-
     var gameOver = false
     var lastKeyPressed = Pair(0, 0)
     var currentPlayer = GameModel.firstPlayer
@@ -54,7 +52,6 @@ class GameLogic : Controller() {
         currentPlayer.myMoves.add(keyPressed)
         playerWaiting.opponentMoves.add(keyPressed)
         lastKeyPressed = keyPressed
-
     }
 
     init {
@@ -68,5 +65,4 @@ class GameLogic : Controller() {
         }
         update()
     }
-
 }

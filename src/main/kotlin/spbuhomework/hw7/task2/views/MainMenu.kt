@@ -18,7 +18,7 @@ class MainMenu : View("TicTacToe") {
             }
         }
         button("Local Multiplayer") {
-            setPrefSize(400.0, 100.0)
+            setPrefSize(MENU_BUTTON_WIDTH, BUTTON_HEIGHT)
             action {
                 GameModel.firstPlayer = HumanPlayer()
                 GameModel.secondPlayer = HumanPlayer()

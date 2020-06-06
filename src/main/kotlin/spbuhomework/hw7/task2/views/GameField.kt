@@ -1,6 +1,10 @@
 package spbuhomework.hw7.task2.views
 
-import spbuhomework.hw7.task2.*
+import spbuhomework.hw7.task2.BUTTON_HEIGHT
+import spbuhomework.hw7.task2.ButtonTextChange
+import spbuhomework.hw7.task2.GAME_FIELD_BUTTON_WIDTH
+import spbuhomework.hw7.task2.SIDE_LENGTH
+import spbuhomework.hw7.task2.GameLogic
 import tornadofx.View
 import tornadofx.vbox
 import tornadofx.hbox

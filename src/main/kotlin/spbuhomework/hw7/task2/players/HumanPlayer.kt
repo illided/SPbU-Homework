@@ -18,7 +18,8 @@ class HumanPlayer : Player, Controller() {
 
     init {
         subscribe<ButtonPushed> { event ->
-            if (buttonPressReceived && isMyTurn && !myMoves.contains(event.coordinate) && !opponentMoves.contains(event.coordinate)) {
+            val isAvailable = !myMoves.contains(event.coordinate) && !opponentMoves.contains(event.coordinate)
+            if (buttonPressReceived && isMyTurn && isAvailable) {
                 buttonPressed = event.coordinate
                 buttonPressReceived = false
             }

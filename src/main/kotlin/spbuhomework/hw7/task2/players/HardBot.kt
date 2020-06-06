@@ -80,9 +80,8 @@ class HardBot : Player {
         return best
     }
 
-
     private fun getAvailableMoves(): List<Pair<Int, Int>> {
-        return List(9) {
+        return List(SIDE_LENGTH * SIDE_LENGTH) {
             Pair(
                 it % SIDE_LENGTH,
                 it / SIDE_LENGTH

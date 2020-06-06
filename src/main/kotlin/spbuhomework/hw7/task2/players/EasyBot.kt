@@ -24,5 +24,4 @@ class EasyBot : Player {
     override var myMoves: MutableList<Pair<Int, Int>> = mutableListOf()
     override val opponentMoves: MutableList<Pair<Int, Int>> = mutableListOf()
     override var buttonPressReceived: Boolean = true
-
 }
