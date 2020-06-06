@@ -2,14 +2,13 @@ package spbuhomework.hw7.task2.players
 
 import spbuhomework.hw7.task2.SIDE_LENGTH
 
-
 class EasyBot : Player {
     override var playerChar: Char = ' '
 
     override var isMyTurn: Boolean = false
 
     override fun triggerPressing() {
-        val availableButtons = List(9) {
+        val availableButtons = List(SIDE_LENGTH * SIDE_LENGTH) {
             Pair(
                 it % SIDE_LENGTH,
                 it / SIDE_LENGTH

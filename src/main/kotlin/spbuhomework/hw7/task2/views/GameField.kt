@@ -1,9 +1,12 @@
 package spbuhomework.hw7.task2.views
 
-import spbuhomework.hw7.task2.ButtonTextChange
-import spbuhomework.hw7.task2.GameLogic
-import spbuhomework.hw7.task2.SIDE_LENGTH
-import tornadofx.*
+import spbuhomework.hw7.task2.*
+import tornadofx.View
+import tornadofx.vbox
+import tornadofx.hbox
+import tornadofx.button
+import tornadofx.action
+import tornadofx.FXEvent
 
 class GameField : View("TicTacToe") {
     override val root = vbox {
@@ -11,7 +14,7 @@ class GameField : View("TicTacToe") {
             hbox {
                 for (x in 0 until SIDE_LENGTH) {
                     button {
-                        setPrefSize(100.0, 100.0)
+                        setPrefSize(GAME_FIELD_BUTTON_WIDTH, BUTTON_HEIGHT)
                         action {
                             if (!logic.gameOver) {
                                 fire(ButtonPushed(Pair(x, y)))
@@ -38,4 +41,4 @@ class GameField : View("TicTacToe") {
     }
 }
 
-class ButtonPushed(val coordinate: Pair<Int, Int>): FXEvent()
+class ButtonPushed(val coordinate: Pair<Int, Int>) : FXEvent()

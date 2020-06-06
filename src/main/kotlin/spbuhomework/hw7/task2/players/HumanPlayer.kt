@@ -1,7 +1,7 @@
 package spbuhomework.hw7.task2.players
 
 import spbuhomework.hw7.task2.views.ButtonPushed
-import tornadofx.*
+import tornadofx.Controller
 
 class HumanPlayer : Player, Controller() {
 
@@ -25,4 +25,3 @@ class HumanPlayer : Player, Controller() {
         }
     }
 }
-
