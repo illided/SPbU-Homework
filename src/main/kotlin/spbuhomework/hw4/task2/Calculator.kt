@@ -4,23 +4,22 @@ class Calculator(initialInputString: String) {
 
     companion object {
         private const val OPERATIONS = "+-/*"
-        private const val REGEX = "((?<!^..)\\([*-\\/\\+0-9 ()]+\\)(?=\$))" +
+        private val REGEX_FOR_EVALUATING_ARGUMENTS = ("((?<!^..)\\([*-\\/\\+0-9 ()]+\\)(?=\$))" +
                 "|((?<=^..)\\([*-\\/\\+0-9 ()]+\\)(?= ))" +
                 "|\\d+" +
-                "|^[+-\\/*]"
+                "|^[+-\\/*]").toRegex()
         private const val MAX_ARGUMENT_NUM = 3
     }
 
     private lateinit var root: Node
 
-    var result: Double = 0.0
-    private set
+    val result: Double
+    get() = root.value
 
     var inputString = ""
         set(value) {
             require("[+-/*() 0-9]+".toRegex().matches(value)) { "Invalid characters found" }
             root = generateTree(value)
-            result = root.value
             field = value
         }
 
@@ -39,7 +38,7 @@ class Calculator(initialInputString: String) {
     }
 
     private fun getListOfOperatorsInputs(inputString: String): List<String> {
-        val regex = REGEX.toRegex()
+        val regex = REGEX_FOR_EVALUATING_ARGUMENTS
         val listOfOperators = regex.findAll(
             inputString.removePrefix("(").removeSuffix(")")
         ).toList().map { it.value }
