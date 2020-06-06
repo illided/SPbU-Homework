@@ -2,7 +2,7 @@ package spbuhomework.hw7.task2.players
 
 import spbuhomework.hw7.task2.SIDE_LENGTH
 
-class HardBot : Player {
+class HardBot : Bot {
     override var buttonPressReceived: Boolean = true
     override var playerChar: Char = ' '
     override var isMyTurn: Boolean = false

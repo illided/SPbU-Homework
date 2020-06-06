@@ -1,5 +1,6 @@
 package spbuhomework.hw7.task2
 
+import spbuhomework.hw7.task2.players.Bot
 import tornadofx.Controller
 import tornadofx.FXEvent
 
@@ -11,7 +12,9 @@ class GameLogic : Controller() {
     var playerWaiting = GameModel.secondPlayer
 
     fun update() {
-        currentPlayer.triggerPressing()
+        if (currentPlayer is Bot) {
+            (currentPlayer as Bot).triggerPressing()
+        }
         if (!currentPlayer.buttonPressReceived) {
             makeTurn()
             checkForGameOver()

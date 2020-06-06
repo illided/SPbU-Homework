@@ -7,7 +7,7 @@ class HumanPlayer : Player, Controller() {
 
     override var myMoves: MutableList<Pair<Int, Int>> = mutableListOf()
     override var opponentMoves: MutableList<Pair<Int, Int>> = mutableListOf()
-    override fun triggerPressing() {}
+
     override var playerChar: Char = ' '
 
     override var isMyTurn: Boolean = false
