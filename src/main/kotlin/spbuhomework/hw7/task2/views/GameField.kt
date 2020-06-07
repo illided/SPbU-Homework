@@ -22,10 +22,6 @@ class GameField : View("TicTacToe") {
                         action {
                             if (!logic.gameOver) {
                                 fire(ButtonPushed(Pair(x, y)))
-                                logic.update()
-                                if (logic.gameOver) {
-                                    find<WinScreen>().openWindow()
-                                }
                             }
                         }
                         subscribe<ButtonTextChange> {

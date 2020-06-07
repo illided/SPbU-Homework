@@ -1,8 +1,10 @@
 package spbuhomework.hw7.task2.players
 
+import spbuhomework.hw7.task2.PlayerMadeMove
 import spbuhomework.hw7.task2.SIDE_LENGTH
+import tornadofx.Controller
 
-class HardBot : Bot {
+class HardBot : Bot, Controller() {
     override var buttonPressReceived: Boolean = true
     override var playerChar: Char = ' '
     override var isMyTurn: Boolean = false
@@ -12,6 +14,7 @@ class HardBot : Bot {
         if (potentialButtonPressed != null) {
             buttonPressed = potentialButtonPressed
             buttonPressReceived = false
+            fire(PlayerMadeMove(playerChar))
         }
     }
 

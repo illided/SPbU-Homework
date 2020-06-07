@@ -1,5 +1,6 @@
 package spbuhomework.hw7.task2.players
 
+import spbuhomework.hw7.task2.PlayerMadeMove
 import spbuhomework.hw7.task2.views.ButtonPushed
 import tornadofx.Controller
 
@@ -22,6 +23,7 @@ class HumanPlayer : Player, Controller() {
             if (buttonPressReceived && isMyTurn && isAvailable) {
                 buttonPressed = event.coordinate
                 buttonPressReceived = false
+                fire(PlayerMadeMove(playerChar))
             }
         }
     }

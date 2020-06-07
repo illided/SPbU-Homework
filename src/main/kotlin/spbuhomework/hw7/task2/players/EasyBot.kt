@@ -1,8 +1,10 @@
 package spbuhomework.hw7.task2.players
 
+import spbuhomework.hw7.task2.PlayerMadeMove
 import spbuhomework.hw7.task2.SIDE_LENGTH
+import tornadofx.Controller
 
-class EasyBot : Bot {
+class EasyBot : Bot, Controller() {
     override var playerChar: Char = ' '
 
     override var isMyTurn: Boolean = false
@@ -17,6 +19,7 @@ class EasyBot : Bot {
         if (availableButtons.isNotEmpty()) {
             buttonPressed = availableButtons.random()
             buttonPressReceived = false
+            fire(PlayerMadeMove(playerChar))
         }
     }
 

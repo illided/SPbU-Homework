@@ -1,27 +1,32 @@
 package spbuhomework.hw7.task2
 
 import spbuhomework.hw7.task2.players.Bot
+import spbuhomework.hw7.task2.views.WinScreen
 import tornadofx.Controller
 import tornadofx.FXEvent
 
 class ButtonTextChange(val coordinate: Pair<Int, Int>, val newText: Char) : FXEvent()
+class PlayerMadeMove(val playerChar: Char): FXEvent()
 class GameLogic : Controller() {
     var gameOver = false
     var currentPlayer = GameModel.firstPlayer
     var playerWaiting = GameModel.secondPlayer
 
-    fun update() {
-        if (currentPlayer is Bot) {
-            (currentPlayer as Bot).triggerPressing()
-        }
+    private fun update() {
         if (!currentPlayer.buttonPressReceived) {
             makeTurn()
             checkForGameOver()
-            currentPlayer.isMyTurn = false
-            playerWaiting.isMyTurn = true
-            currentPlayer = playerWaiting.also { playerWaiting = currentPlayer }
             if (!gameOver) {
-                update()
+                currentPlayer.isMyTurn = false
+                playerWaiting.isMyTurn = true
+                currentPlayer = playerWaiting.also { playerWaiting = currentPlayer }
+                runAsync {
+                    if (currentPlayer is Bot) {
+                        (currentPlayer as Bot).triggerPressing()
+                    }
+                }
+            } else {
+                find<WinScreen>().openWindow()
             }
         }
     }
@@ -64,6 +69,13 @@ class GameLogic : Controller() {
                 fire(ButtonTextChange(Pair(x, y), ' '))
             }
         }
-        update()
+        subscribe<PlayerMadeMove> {
+            if (it.playerChar == currentPlayer.playerChar) {
+                update()
+            }
+        }
+        if (currentPlayer is Bot) {
+            (currentPlayer as Bot).triggerPressing()
+        }
     }
 }
