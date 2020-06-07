@@ -37,6 +37,6 @@ class BotDifficultyChoosing : View("TicTacToe") {
     }
 
     private fun toNextView() {
-        this.replaceWith<SideChoosing>()
+        this.replaceWith<SideChoosing>(sizeToScene = true)
     }
 }

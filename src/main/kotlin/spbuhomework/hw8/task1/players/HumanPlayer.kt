@@ -26,5 +26,6 @@ class HumanPlayer : Player, Controller() {
                 fire(PlayerMadeMove(playerChar))
             }
         }
+        println("Human player created")
     }
 }

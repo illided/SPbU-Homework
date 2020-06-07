@@ -15,7 +15,7 @@ class MainMenu : View("TicTacToe") {
         button("Singleplayer") {
             setPrefSize(MENU_BUTTON_WIDTH, BUTTON_HEIGHT)
             action {
-                this@MainMenu.replaceWith<BotDifficultyChoosing>()
+                this@MainMenu.replaceWith<BotDifficultyChoosing>(sizeToScene = true)
             }
         }
         button("Local Multiplayer") {

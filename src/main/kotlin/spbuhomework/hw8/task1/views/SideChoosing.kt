@@ -5,18 +5,13 @@ import spbuhomework.hw8.task1.BUTTON_HEIGHT
 import spbuhomework.hw8.task1.GameModel
 import spbuhomework.hw8.task1.MENU_BUTTON_WIDTH
 import spbuhomework.hw8.task1.players.HumanPlayer
-import tornadofx.View
-import tornadofx.stackpane
-import tornadofx.label
-import tornadofx.hbox
-import tornadofx.button
-import tornadofx.action
+import tornadofx.*
 
 class SideChoosing : View("TicTacToe") {
-    override val root = stackpane {
+    override val root = vbox {
         label("Choose side") {
             setPrefSize(MENU_BUTTON_WIDTH, BUTTON_HEIGHT)
-        }.alignment = Pos.TOP_CENTER
+        }.alignment = Pos.CENTER
         hbox {
             button("X") {
                 setPrefSize(MENU_BUTTON_WIDTH / 2, BUTTON_HEIGHT)

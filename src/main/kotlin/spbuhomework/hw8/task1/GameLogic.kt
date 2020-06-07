@@ -32,6 +32,7 @@ class GameLogic : Controller() {
             } else {
                 find<GameOverScreen>().openWindow()
             }
+            printInfo()
         }
     }
 
@@ -59,12 +60,13 @@ class GameLogic : Controller() {
     private fun makeTurn() {
         val keyPressed = currentPlayer.buttonPressed
         fire(ButtonTextChange(keyPressed, currentPlayer.playerChar))
-        println()
+        println("${currentPlayer.playerChar} moved at $keyPressed")
         currentPlayer.myMoves.add(keyPressed)
         playerWaiting.opponentMoves.add(keyPressed)
     }
 
     init {
+        println("----NEW_GAME")
         GameModel.firstPlayer.isMyTurn = true
         GameModel.firstPlayer.playerChar = 'X'
         GameModel.secondPlayer.playerChar = 'O'
@@ -81,5 +83,9 @@ class GameLogic : Controller() {
         if (currentPlayer is Bot) {
             (currentPlayer as Bot).triggerPressing()
         }
+    }
+
+    private fun printInfo() {
+        println("Game over: ${GameModel.gameOver}")
     }
 }

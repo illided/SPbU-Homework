@@ -21,6 +21,7 @@ class GameOverScreen : View("TicTacToe") {
                 setPrefSize(MENU_BUTTON_WIDTH, BUTTON_HEIGHT)
                 action {
                     find<GameField>().replaceWith<MainMenu>(sizeToScene = true)
+                    GameModel.gameOver = false
                     close()
                 }
             }
