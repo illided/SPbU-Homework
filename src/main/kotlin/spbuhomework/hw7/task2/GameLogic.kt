@@ -1,16 +1,18 @@
 package spbuhomework.hw7.task2
 
 import spbuhomework.hw7.task2.players.Bot
+import spbuhomework.hw7.task2.players.Player
 import spbuhomework.hw7.task2.views.WinScreen
 import tornadofx.Controller
 import tornadofx.FXEvent
 
 class ButtonTextChange(val coordinate: Pair<Int, Int>, val newText: Char) : FXEvent()
 class PlayerMadeMove(val playerChar: Char) : FXEvent()
-class GameLogic : Controller() {
+object GameLogic : Controller() {
     var gameOver = false
-    var currentPlayer = GameModel.firstPlayer
-    var playerWaiting = GameModel.secondPlayer
+    var turnInProcess = false
+    private lateinit var currentPlayer: Player
+    private lateinit var playerWaiting: Player
 
     private fun update() {
         if (!currentPlayer.buttonPressReceived) {
@@ -53,24 +55,27 @@ class GameLogic : Controller() {
     }
 
     private fun makeTurn() {
+        currentPlayer.buttonPressReceived = true
         val keyPressed = currentPlayer.buttonPressed
         fire(ButtonTextChange(keyPressed, currentPlayer.playerChar))
-        currentPlayer.buttonPressReceived = true
         currentPlayer.myMoves.add(keyPressed)
         playerWaiting.opponentMoves.add(keyPressed)
     }
 
-    init {
-        GameModel.firstPlayer.isMyTurn = true
-        GameModel.firstPlayer.playerChar = 'X'
-        GameModel.secondPlayer.playerChar = 'O'
+    fun refresh() {
+        gameOver = false
+        currentPlayer = GameModel.firstPlayer
+        playerWaiting = GameModel.secondPlayer
+        currentPlayer.isMyTurn = true
+        currentPlayer.playerChar = 'X'
+        playerWaiting.playerChar = 'O'
         for (x in 0 until SIDE_LENGTH) {
             for (y in 0 until SIDE_LENGTH) {
                 fire(ButtonTextChange(Pair(x, y), ' '))
             }
         }
         subscribe<PlayerMadeMove> {
-            if (it.playerChar == currentPlayer.playerChar) {
+            if (it.playerChar == currentPlayer.playerChar && !turnInProcess) {
                 update()
             }
         }

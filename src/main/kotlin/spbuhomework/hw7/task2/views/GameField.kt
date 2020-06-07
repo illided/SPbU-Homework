@@ -1,5 +1,6 @@
 package spbuhomework.hw7.task2.views
 
+import javafx.beans.property.SimpleBooleanProperty
 import spbuhomework.hw7.task2.BUTTON_HEIGHT
 import spbuhomework.hw7.task2.ButtonTextChange
 import spbuhomework.hw7.task2.GAME_FIELD_BUTTON_WIDTH
@@ -13,6 +14,8 @@ import tornadofx.action
 import tornadofx.FXEvent
 
 class GameField : View("TicTacToe") {
+    var isLogicLoaded = SimpleBooleanProperty(false)
+
     override val root = vbox {
         for (y in 0 until SIDE_LENGTH) {
             hbox {
@@ -20,7 +23,7 @@ class GameField : View("TicTacToe") {
                     button {
                         setPrefSize(GAME_FIELD_BUTTON_WIDTH, BUTTON_HEIGHT)
                         action {
-                            if (!logic.gameOver) {
+                            if (!GameLogic.gameOver && isLogicLoaded.get()) {
                                 fire(ButtonPushed(Pair(x, y)))
                             }
                         }
@@ -34,10 +37,10 @@ class GameField : View("TicTacToe") {
             }
         }
     }
-    private lateinit var logic: GameLogic
     override fun onDock() {
         super.onDock()
-        logic = GameLogic()
+        GameLogic.refresh()
+        isLogicLoaded.set(true)
     }
 }
 
