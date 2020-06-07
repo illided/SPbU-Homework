@@ -6,7 +6,7 @@ import tornadofx.Controller
 import tornadofx.FXEvent
 
 class ButtonTextChange(val coordinate: Pair<Int, Int>, val newText: Char) : FXEvent()
-class PlayerMadeMove(val playerChar: Char): FXEvent()
+class PlayerMadeMove(val playerChar: Char) : FXEvent()
 class GameLogic : Controller() {
     var gameOver = false
     var currentPlayer = GameModel.firstPlayer
