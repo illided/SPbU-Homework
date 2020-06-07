@@ -8,7 +8,7 @@ import tornadofx.FXEvent
 
 class ButtonTextChange(val coordinate: Pair<Int, Int>, val newText: Char) : FXEvent()
 class PlayerMadeMove(val playerChar: Char) : FXEvent()
-class GameLogic : Controller() {
+object GameLogic : Controller() {
     var currentPlayer = GameModel.firstPlayer
     var playerWaiting = GameModel.secondPlayer
 
@@ -21,6 +21,7 @@ class GameLogic : Controller() {
             checkForGameOver()
             currentPlayer.isMyTurn = false
             playerWaiting.isMyTurn = true
+            currentPlayer.buttonPressReceived = true
             currentPlayer = playerWaiting.also { playerWaiting = currentPlayer }
             if (!GameModel.gameOver) {
                 if (currentPlayer is Bot) {
@@ -57,16 +58,16 @@ class GameLogic : Controller() {
         val keyPressed = currentPlayer.buttonPressed
         fire(ButtonTextChange(keyPressed, currentPlayer.playerChar))
         println("${currentPlayer.playerChar} moved at $keyPressed")
-        currentPlayer.buttonPressReceived = true
         currentPlayer.myMoves.add(keyPressed)
         playerWaiting.opponentMoves.add(keyPressed)
     }
 
-    init {
-        println("----NEW_GAME")
-        GameModel.firstPlayer.isMyTurn = true
-        GameModel.firstPlayer.playerChar = 'X'
-        GameModel.secondPlayer.playerChar = 'O'
+    fun refresh() {
+        currentPlayer = GameModel.firstPlayer
+        playerWaiting = GameModel.secondPlayer
+        currentPlayer.isMyTurn = true
+        currentPlayer.playerChar = 'X'
+        playerWaiting.playerChar = 'O'
         for (x in 0 until SIDE_LENGTH) {
             for (y in 0 until SIDE_LENGTH) {
                 fire(ButtonTextChange(Pair(x, y), ' '))
