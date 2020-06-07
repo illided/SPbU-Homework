@@ -38,6 +38,7 @@ class GameField : View("TicTacToe") {
         }
     }
     override fun onDock() {
+        isLogicLoaded.set(false)
         super.onDock()
         GameLogic.refresh()
         isLogicLoaded.set(true)

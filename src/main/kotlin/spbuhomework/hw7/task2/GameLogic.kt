@@ -10,7 +10,6 @@ class ButtonTextChange(val coordinate: Pair<Int, Int>, val newText: Char) : FXEv
 class PlayerMadeMove(val playerChar: Char) : FXEvent()
 object GameLogic : Controller() {
     var gameOver = false
-    var turnInProcess = false
     private lateinit var currentPlayer: Player
     private lateinit var playerWaiting: Player
 
@@ -75,7 +74,7 @@ object GameLogic : Controller() {
             }
         }
         subscribe<PlayerMadeMove> {
-            if (it.playerChar == currentPlayer.playerChar && !turnInProcess) {
+            if (it.playerChar == currentPlayer.playerChar) {
                 update()
             }
         }
