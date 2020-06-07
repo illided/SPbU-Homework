@@ -75,6 +75,7 @@ fun Application.mainModule() {
                 }
             } finally {
                 players -= newPlayer
+                currentPlayerChar = 'X'
                 println("Player disconnected")
             }
         }

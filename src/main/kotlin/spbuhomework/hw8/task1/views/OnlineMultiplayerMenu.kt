@@ -1,8 +1,10 @@
 package spbuhomework.hw8.task1.views
 
 import io.ktor.util.KtorExperimentalAPI
+import javafx.application.Platform
 import javafx.beans.property.SimpleStringProperty
 import javafx.geometry.Pos
+import kotlinx.coroutines.runBlocking
 import spbuhomework.hw8.task1.BUTTON_HEIGHT
 import spbuhomework.hw8.task1.GameModel
 import spbuhomework.hw8.task1.MENU_BUTTON_WIDTH
@@ -16,7 +18,7 @@ class OnlineMultiplayerMenu : View("TicTacToe") {
     private var isLoaded = false
 
     override val root = vbox {
-        label(loadingText.value) {
+        label(loadingText) {
             setPrefSize(MENU_BUTTON_WIDTH, BUTTON_HEIGHT)
         }.alignment = Pos.CENTER
         button("Play") {
@@ -47,7 +49,9 @@ class OnlineMultiplayerMenu : View("TicTacToe") {
                 GameModel.secondPlayer = GameModel.opponent
                 newLoadingText += "X"
             }
-            loadingText.value = newLoadingText
+            return@runAsync newLoadingText
+        } ui {
+            loadingText.value = it
             isLoaded = true
         }
     }

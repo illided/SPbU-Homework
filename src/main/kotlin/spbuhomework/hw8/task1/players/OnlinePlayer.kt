@@ -5,11 +5,8 @@ import io.ktor.client.features.websocket.WebSockets
 import io.ktor.client.features.websocket.ws
 import io.ktor.http.cio.websocket.Frame
 import io.ktor.http.cio.websocket.WebSocketSession
-import io.ktor.http.cio.websocket.close
 import io.ktor.http.cio.websocket.readText
 import io.ktor.util.KtorExperimentalAPI
-import javafx.application.Platform
-import kotlinx.coroutines.isActive
 import kotlinx.coroutines.runBlocking
 import spbuhomework.hw8.task1.GameModel
 import spbuhomework.hw8.task1.PlayerMadeMove
@@ -45,9 +42,9 @@ class OnlinePlayer : Player, Controller() {
     inner class OnlineConnector : Thread() {
         private var opponentChar = ' '
 
-        private suspend fun receiveMove(sockets: WebSocketSession) {
+        private suspend fun receiveMove(socket: WebSocketSession) {
             if (buttonPressReceived && isMyTurn) {
-                val frame = sockets.incoming.receive()
+                val frame = socket.incoming.receive()
                 if (frame is Frame.Text) {
                     val receivedMessage = frame.readText()
                     println("received message: $receivedMessage")
@@ -91,7 +88,6 @@ class OnlinePlayer : Player, Controller() {
                         receiveMove(this)
                         sendMove(this)
                     }
-                    this.close()
                 }
             }
         }

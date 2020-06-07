@@ -19,20 +19,16 @@ class GameLogic : Controller() {
                 (playerWaiting as OnlinePlayer).sendMessage(currentPlayer.buttonPressed)
             }
             checkForGameOver()
+            currentPlayer.isMyTurn = false
+            playerWaiting.isMyTurn = true
+            currentPlayer = playerWaiting.also { playerWaiting = currentPlayer }
             if (!GameModel.gameOver) {
-                currentPlayer.isMyTurn = false
-                playerWaiting.isMyTurn = true
-                currentPlayer.buttonPressReceived = true
-                currentPlayer = playerWaiting.also { playerWaiting = currentPlayer }
-                runAsync {
-                    if (currentPlayer is Bot) {
-                        (currentPlayer as Bot).triggerPressing()
-                    }
+                if (currentPlayer is Bot) {
+                    (currentPlayer as Bot).triggerPressing()
                 }
             } else {
                 find<GameOverScreen>().openWindow()
             }
-            printInfo()
         }
     }
 
@@ -61,6 +57,7 @@ class GameLogic : Controller() {
         val keyPressed = currentPlayer.buttonPressed
         fire(ButtonTextChange(keyPressed, currentPlayer.playerChar))
         println("${currentPlayer.playerChar} moved at $keyPressed")
+        currentPlayer.buttonPressReceived = true
         currentPlayer.myMoves.add(keyPressed)
         playerWaiting.opponentMoves.add(keyPressed)
     }
@@ -83,9 +80,5 @@ class GameLogic : Controller() {
         if (currentPlayer is Bot) {
             (currentPlayer as Bot).triggerPressing()
         }
-    }
-
-    private fun printInfo() {
-        println("Game over: ${GameModel.gameOver}")
     }
 }
