@@ -1,6 +1,5 @@
 package spbuhomework.hw8.task1
 
-import spbuhomework.hw8.task1.GameModel
 import spbuhomework.hw8.task1.players.Bot
 import spbuhomework.hw8.task1.players.OnlinePlayer
 import spbuhomework.hw8.task1.views.GameOverScreen
@@ -16,10 +15,10 @@ class GameLogic : Controller() {
     private fun update() {
         if (!currentPlayer.buttonPressReceived) {
             makeTurn()
-            checkForGameOver()
             if (playerWaiting is OnlinePlayer) {
                 (playerWaiting as OnlinePlayer).sendMessage(currentPlayer.buttonPressed)
             }
+            checkForGameOver()
             if (!GameModel.gameOver) {
                 currentPlayer.isMyTurn = false
                 playerWaiting.isMyTurn = true

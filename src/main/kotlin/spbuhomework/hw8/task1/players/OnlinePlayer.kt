@@ -42,10 +42,6 @@ class OnlinePlayer : Player, Controller() {
         OnlineConnector().start()
     }
 
-    companion object {
-        private const val SLEEP_TIME = 1000L
-    }
-
     inner class OnlineConnector : Thread() {
         private var opponentChar = ' '
 
@@ -76,8 +72,6 @@ class OnlinePlayer : Player, Controller() {
             }
         }
 
-        fun waitForPlayer() = sleep(SLEEP_TIME)
-
         @KtorExperimentalAPI
         override fun run() {
             runBlocking {
@@ -93,30 +87,11 @@ class OnlinePlayer : Player, Controller() {
                             }
                         }
                     }
-                    while (isActive) {
+                    while (!GameModel.gameOver) {
                         receiveMove(this)
                         sendMove(this)
-                        if (GameModel.gameOver) {
-                            this.close()
-                        }
                     }
                     this.close()
-                    /*when (val frame = incoming.receive()) {
-                        is Frame.Text -> {
-                            val input = frame.readText()
-                            when {
-                                input[0] == 'B' && buttonPressReceived && isMyTurn -> {
-                                    buttonPressed = Pair(input[1].toInt(), input[2].toInt())
-                                    buttonPressReceived = false
-                                    fire(PlayerMadeMove(playerChar))
-                                }
-                                input[0] == 'C' -> {
-                                    playerChar = input[1]
-                                    println("Online player is ${input[1]}")
-                                }
-                            }
-                        }
-                    }*/
                 }
             }
         }
