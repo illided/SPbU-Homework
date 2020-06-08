@@ -1,45 +1,33 @@
 package spbuhomework.hw6
 
-import kotlinx.coroutines.experimental.async
-import kotlinx.coroutines.experimental.runBlocking
+import kotlin.random.Random
+import kotlin.random.nextInt
+
 import kotlin.system.measureTimeMillis
 
-fun <T : Comparable<T>> basicQuicksort(items: List<T>): List<T> {
-    if (items.count() < 1) return items
-    val pivot = items[items.count() / 2]
-    val equal = items.filter { it == pivot }
-    val less = items.filter { it < pivot }
-    val greater = items.filter { it > pivot }
-    return basicQuicksort(less) + equal + basicQuicksort(
-        greater
-    )
-}
-
-suspend fun <T : Comparable<T>> realQuicksort(items: List<T>): List<T> {
-    if (items.count() < 1) return items
-    val pivot = items[items.count() / 2]
-    val equal = items.filter { it == pivot }
-    val less = async { realQuicksort(items.filter { it < pivot }) }
-    val greater = async { realQuicksort(items.filter { it > pivot }) }
-    return less.await() + equal + greater.await()
-}
-
-fun createPsuedoRandomList(seed: Int = 5): List<Int> {
-    val myList = mutableListOf<Int>()
-    for (i in 1..seed) {
-        myList.add(seed * i)
-        myList.add(seed * i - seed)
-        myList.add(seed - i)
+fun createRandomArray(lowestValue: Int = 1, highestValue: Int = 100, arrayLength: Int = 50000): Array<Int> {
+    val newArray = Array(arrayLength) { 0 }
+    for (i in 0 until arrayLength) {
+        newArray[i] = Random.nextInt(lowestValue..highestValue)
     }
-    return myList
+    return newArray
 }
 
-fun main() = runBlocking<Unit> {
-    val myList = createPsuedoRandomList()
+fun main() {
+    val myArray = createRandomArray()
+    val standardQuickSort = StandardQuickSort()
+    val asyncQuickSort = AsyncQuickSort()
 
-    val time = measureTimeMillis { val mySortedList = basicQuicksort(myList) }
-    println("Standart quick sort: $time")
+    val basicSortTime = measureTimeMillis { standardQuickSort.sort(myArray) }
+    println("Standard quick sort: $basicSortTime")
 
-    val newTime = measureTimeMillis { val mySortedList = realQuicksort(myList) }
-    println("Fast quick sort: $newTime")
+    val asyncSortTime = measureTimeMillis { asyncQuickSort.sort(myArray) }
+    println("Fast quick sort: $asyncSortTime")
+
+    val sortNameArray = arrayOf("Standard quick sort ", " async quick sort")
+    when {
+        basicSortTime < asyncSortTime -> println(sortNameArray.joinToString("faster than"))
+        basicSortTime > asyncSortTime -> println(sortNameArray.joinToString("slower than"))
+        else -> println(sortNameArray.joinToString("have same performance as"))
+    }
 }
