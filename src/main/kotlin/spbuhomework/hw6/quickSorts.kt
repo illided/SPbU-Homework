@@ -35,7 +35,7 @@ class StandardQuickSort : Sort() {
 
     private fun <T> runStandardQuickSort(inputArray: Array<T>, left: Int, right: Int) where T : Comparable<T> {
         if (left < right) {
-            val middleIndex = super.partition(inputArray, left, right)
+            val middleIndex = partition(inputArray, left, right)
             runStandardQuickSort(inputArray, left, middleIndex)
             runStandardQuickSort(inputArray, middleIndex + 1, right)
         }
@@ -50,7 +50,7 @@ class AsyncQuickSort : Sort() {
 
     private suspend fun <T> runAsyncQuickSort(inputArray: Array<T>, left: Int, right: Int) where T : Comparable<T> {
         if (left < right) {
-            val middleIndex = super.partition(inputArray, left, right)
+            val middleIndex = partition(inputArray, left, right)
             runAsyncQuickSort(inputArray, left, middleIndex)
             runAsyncQuickSort(inputArray, middleIndex + 1, right)
         }
