@@ -136,12 +136,13 @@ class HashTable<K : Comparable<K>, V>(
     }
 
     override fun toString(): String {
-        var outputString = "{"
+        val outputString = mutableListOf("{")
         for (listOfEntry in arrayOfList) {
             for (entry in listOfEntry) {
-                outputString += entry.toString()
+                outputString.add(entry.toString())
             }
         }
-        return "$outputString}"
+        outputString.add("}")
+        return outputString.joinToString("")
     }
 }
