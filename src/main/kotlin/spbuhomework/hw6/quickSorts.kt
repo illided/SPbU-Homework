@@ -2,12 +2,12 @@ package spbuhomework.hw6
 
 import kotlinx.coroutines.experimental.runBlocking
 
-abstract class Sort {
-    abstract fun <T> sort(inputArray: Array<T>): Array<T> where T : Comparable<T>
+interface Sort {
+    fun <T> sortArray(inputArray: Array<T>): Array<T> where T : Comparable<T>
 }
 
-class StandardQuickSort : Sort() {
-    override fun <T> sort(inputArray: Array<T>): Array<T> where T : Comparable<T> {
+class StandardQuickSort : Sort {
+    override fun <T> sortArray(inputArray: Array<T>): Array<T> where T : Comparable<T> {
         runStandardQuickSort(inputArray, 0, inputArray.size - 1)
         return inputArray
     }
@@ -37,8 +37,8 @@ class StandardQuickSort : Sort() {
     }
 }
 
-class AsyncQuickSort : Sort() {
-    override fun <T> sort(inputArray: Array<T>): Array<T> where T : Comparable<T> {
+class AsyncQuickSort : Sort {
+    override fun <T> sortArray(inputArray: Array<T>): Array<T> where T : Comparable<T> {
         runBlocking { runAsyncQuickSort(inputArray, 0, inputArray.size - 1) }
         return inputArray
     }

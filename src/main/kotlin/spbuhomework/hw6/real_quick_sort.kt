@@ -5,23 +5,23 @@ import kotlin.random.nextInt
 
 import kotlin.system.measureTimeMillis
 
-fun createRandomArray(lowestValue: Int = 1, highestValue: Int = 100, arrayLength: Int = 50000): Array<Int> {
+fun createRandomArray(lowestValue: Int = 1, highestValue: Int = 100, arrayLength: Int = 50000): IntArray {
     val newArray = Array(arrayLength) { 0 }
     for (i in 0 until arrayLength) {
         newArray[i] = Random.nextInt(lowestValue..highestValue)
     }
-    return newArray
+    return newArray.toIntArray()
 }
 
 fun main() {
-    val myArray = createRandomArray()
+    val myArray = createRandomArray().toTypedArray()
     val standardQuickSort = StandardQuickSort()
     val asyncQuickSort = AsyncQuickSort()
 
-    val basicSortTime = measureTimeMillis { standardQuickSort.sort(myArray) }
+    val basicSortTime = measureTimeMillis { standardQuickSort.sortArray(myArray) }
     println("Standard quick sort: $basicSortTime")
 
-    val asyncSortTime = measureTimeMillis { asyncQuickSort.sort(myArray) }
+    val asyncSortTime = measureTimeMillis { asyncQuickSort.sortArray(myArray) }
     println("Fast quick sort: $asyncSortTime")
 
     val sortNameArray = arrayOf("Standard quick sort ", " async quick sort")
