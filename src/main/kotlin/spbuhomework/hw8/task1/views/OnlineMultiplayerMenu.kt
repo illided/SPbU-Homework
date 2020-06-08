@@ -1,17 +1,21 @@
 package spbuhomework.hw8.task1.views
 
 import io.ktor.util.KtorExperimentalAPI
-import javafx.application.Platform
 import javafx.beans.property.SimpleStringProperty
 import javafx.geometry.Pos
-import kotlinx.coroutines.runBlocking
 import spbuhomework.hw8.task1.BUTTON_HEIGHT
 import spbuhomework.hw8.task1.GameModel
 import spbuhomework.hw8.task1.MENU_BUTTON_WIDTH
 import spbuhomework.hw8.task1.players.HumanPlayer
 import spbuhomework.hw8.task1.players.OnlinePlayer
-import tornadofx.*
+import tornadofx.View
+import tornadofx.label
+import tornadofx.button
+import tornadofx.vbox
+import tornadofx.action
 import java.lang.Thread.sleep
+
+private const val SLEEP_TIME_FOR_LOADING = 10.toLong()
 
 class OnlineMultiplayerMenu : View("TicTacToe") {
     private val loadingText = SimpleStringProperty("Trying to connect...")
@@ -38,7 +42,7 @@ class OnlineMultiplayerMenu : View("TicTacToe") {
             var newLoadingText = "Connected! Your sign = "
             (GameModel.opponent as OnlinePlayer).setConnection()
             while (GameModel.opponent.playerChar == ' ') {
-                sleep(10)
+                sleep(SLEEP_TIME_FOR_LOADING)
             }
             if (GameModel.opponent.playerChar == 'X') {
                 GameModel.firstPlayer = GameModel.opponent

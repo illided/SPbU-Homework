@@ -17,6 +17,7 @@ class OnlinePlayer : Player, Controller() {
     override var playerChar: Char = ' '
 
     override var isMyTurn: Boolean = false
+
     override var buttonPressReceived: Boolean = true
 
     override var buttonPressed: Pair<Int, Int> = Pair(0, 0)
