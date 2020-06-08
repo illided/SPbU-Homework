@@ -60,7 +60,7 @@ class HashTable<K : Comparable<K>, V>(
         private set
 
     val loadFactor: Double
-        get() = size.toDouble() / arraySize
+        get() = size / ((arraySize * extendThreshold).toDouble())
 
     private fun getHash(key: K): Int {
         return abs(currentHasher.hashFunction(key)) % arraySize
@@ -132,7 +132,7 @@ class HashTable<K : Comparable<K>, V>(
             "Current load factor: $loadFactor",
             "Number of conflicts since last refill: $conflictNumber",
             "Maximum length of conflict list: $maximumListLength"
-        ).joinToString { "\n" }
+        ).joinToString("\n")
     }
 
     override fun toString(): String {
