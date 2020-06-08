@@ -4,15 +4,12 @@ import io.ktor.application.Application
 import io.ktor.application.install
 import io.ktor.http.cio.websocket.Frame
 import io.ktor.http.cio.websocket.WebSocketSession
-import io.ktor.http.cio.websocket.close
 import io.ktor.http.cio.websocket.readText
 import io.ktor.routing.routing
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import io.ktor.websocket.WebSockets
 import io.ktor.websocket.webSocket
-import java.util.Collections
-import kotlin.collections.LinkedHashSet
 
 object CommunicationWord {
     const val PLAYER_CHAR = "C"
