@@ -116,22 +116,22 @@ internal class TrieTest {
         assertEquals(0, myTrie.howManyStartWithPrefix("his"))
     }
 
-    private val testFilePath = "src/test/kotlin/spbuhomework/hw5/task1/"
+    private val testFilePath = "src/test/resources/spbuhomework/hw5/task1/"
 
-   /* @Test
-    fun deserialize_fromEmptyStream_getEmptyTrie() {
+    @Test
+    fun readObject_fromEmptyStream_getEmptyTrie() {
         val myTrie = Trie()
         val emptyFile = File(testFilePath + "emptyFile.txt")
-        myTrie.deserialize(emptyFile.inputStream())
+        myTrie.readObject(emptyFile.inputStream())
         assertArrayEquals(arrayOf<String>(), myTrie.values.toTypedArray())
     }
 
     @Test
-    fun deserialize_fromNonEmptyCorrectStream_getNonEmptyTrie() {
+    fun readObject_fromNonEmptyCorrectStream_getNonEmptyTrie() {
         val myTrie = Trie()
         val emptyFile = File(testFilePath + "nonEmptyCorrectFile.txt")
         require(emptyFile.exists()) { "File does not exist or have different path" }
-        myTrie.deserialize(emptyFile.inputStream())
+        myTrie.readObject(emptyFile.inputStream())
         assertTrue(
             arrayOf(
                 "Alice",
@@ -154,21 +154,21 @@ internal class TrieTest {
     }
 
     @Test
-    fun deserialize_fromNonEmptyNonCorrectStream_exceptionThrown() {
+    fun readObject_fromNonEmptyNonCorrectStream_exceptionThrown() {
         val myTrie = Trie()
         val emptyFile = File(testFilePath + "nonEmptyNonCorrectFile.txt")
         require(emptyFile.exists()) { "File does not exist or have different path" }
         assertThrows(IOException::class.java) {
-            myTrie.deserialize(emptyFile.inputStream())
+            myTrie.readObject(emptyFile.inputStream())
         }
     }
 
     @Test
-    fun serialize_nonEmptyTrie_correctWork() {
+    fun writeObject_nonEmptyTrie_correctWork() {
         val myTrie = Trie()
         "she sheep kotlin he her herself hero".split(" ").forEach { myTrie.add(it) }
         val output = FileOutputStream(testFilePath + "nonEmptyTrie.txt")
-        myTrie.serialize(output)
+        myTrie.writeObject(output)
         output.close()
 
         val expected = File(testFilePath + "nonEmptyTrieExpectations.txt")
@@ -177,14 +177,14 @@ internal class TrieTest {
     }
 
     @Test
-    fun serialize_emptyTrie_correctWork() {
+    fun writeObject_emptyTrie_correctWork() {
         val myTrie = Trie()
         val output = FileOutputStream(testFilePath + "emptyTrie.txt")
-        myTrie.serialize(output)
+        myTrie.writeObject(output)
         output.close()
 
         val expected = File(testFilePath + "emptyFile.txt")
         val actual = File(testFilePath + "emptyTrie.txt")
         assertEquals(expected.readText(), actual.readText())
-    }*/
+    }
 }

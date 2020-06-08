@@ -6,8 +6,8 @@ import java.io.OutputStream
 
 interface Serializable {
     @Throws(IOException::class)
-    fun serialize(output: OutputStream)
+    fun writeObject(output: OutputStream)
 
     @Throws(IOException::class)
-    fun deserialize(input: InputStream)
+    fun readObject(input: InputStream)
 }

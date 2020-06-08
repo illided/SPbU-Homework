@@ -1,19 +1,9 @@
 package spbuhomework.hw5.task1
 
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
-import org.junit.jupiter.api.Assertions.*
-
 internal class NodeTest {
-
-    @Test
-    fun appendNode_wordInput_correctWork() {
-        /*just testing if it doesn't crash
-        * append will be tested with other functions */
-        val node = Node()
-        node.appendNode("Hello")
-    }
-
     @Test
     fun isContains_itemInSubTrie_trueAsOutput() {
         val node = Node()
