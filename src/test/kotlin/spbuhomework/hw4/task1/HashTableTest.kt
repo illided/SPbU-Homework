@@ -6,16 +6,6 @@ import org.junit.jupiter.api.Assertions.*
 
 internal class HashTableTest {
     @Test
-    fun put() {
-        /* just checking if it doesn't crash
-        * put will be tested with other functions*/
-        val myHashTable = HashTable<String, String>()
-        for (i in 1..100) {
-            myHashTable.put(i.toString(), i.toString())
-        }
-    }
-
-    @Test
     fun getSize_nonEmptyHashTable_correctOutput() {
         val myHashTable = HashTable<String, String>()
         for (i in 1..100) {
