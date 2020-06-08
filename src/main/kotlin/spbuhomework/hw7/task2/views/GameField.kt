@@ -37,10 +37,11 @@ class GameField : View("TicTacToe") {
             }
         }
     }
+
     override fun onDock() {
         isLogicLoaded.set(false)
         super.onDock()
-        runAsync{
+        runAsync {
             GameLogic.refresh()
         } ui {
             isLogicLoaded.set(true)
