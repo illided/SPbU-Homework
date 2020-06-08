@@ -18,7 +18,7 @@ import java.lang.Thread.sleep
 private const val SLEEP_TIME_FOR_LOADING = 10.toLong()
 
 class OnlineMultiplayerMenu : View("TicTacToe") {
-    private val loadingText = SimpleStringProperty("Trying to connect...")
+    private val loadingText = SimpleStringProperty()
     private var isLoaded = false
 
     override val root = vbox {
@@ -37,6 +37,7 @@ class OnlineMultiplayerMenu : View("TicTacToe") {
 
     @KtorExperimentalAPI
     override fun onDock() {
+        loadingText.value = "Trying to connect..."
         super.onDock()
         runAsync {
             var newLoadingText = "Connected! Your sign = "

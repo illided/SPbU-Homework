@@ -23,10 +23,6 @@ class EasyBot : Bot, Controller() {
         }
     }
 
-    init {
-        println("EasyBot created")
-    }
-
     override var buttonPressed: Pair<Int, Int> = Pair(0, 0)
     override var myMoves: MutableList<Pair<Int, Int>> = mutableListOf()
     override val opponentMoves: MutableList<Pair<Int, Int>> = mutableListOf()

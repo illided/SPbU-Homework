@@ -24,8 +24,10 @@ object GameLogic : Controller() {
             currentPlayer.buttonPressReceived = true
             currentPlayer = playerWaiting.also { playerWaiting = currentPlayer }
             if (!GameModel.gameOver) {
-                if (currentPlayer is Bot) {
-                    (currentPlayer as Bot).triggerPressing()
+                runAsync {
+                    if (currentPlayer is Bot) {
+                        (currentPlayer as Bot).triggerPressing()
+                    }
                 }
             } else {
                 find<GameOverScreen>().openWindow()
@@ -57,7 +59,6 @@ object GameLogic : Controller() {
     private fun makeTurn() {
         val keyPressed = currentPlayer.buttonPressed
         fire(ButtonTextChange(keyPressed, currentPlayer.playerChar))
-        println("${currentPlayer.playerChar} moved at $keyPressed")
         currentPlayer.myMoves.add(keyPressed)
         playerWaiting.opponentMoves.add(keyPressed)
     }

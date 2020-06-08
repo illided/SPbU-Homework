@@ -32,7 +32,6 @@ class OnlinePlayer : Player, Controller() {
     fun sendMessage(keyPressed: Pair<Int, Int>) {
         opponentKeyPressed = keyPressed
         needToBeSend.set(true)
-        println("Want to send message")
     }
 
     @KtorExperimentalAPI
@@ -48,13 +47,11 @@ class OnlinePlayer : Player, Controller() {
                 val frame = socket.incoming.receive()
                 if (frame is Frame.Text) {
                     val receivedMessage = frame.readText()
-                    println("received message: $receivedMessage")
                     if (receivedMessage[0] == 'B') {
                         buttonPressed =
                             Pair(receivedMessage[1].toInt() - '0'.toInt(), receivedMessage[2].toInt() - '0'.toInt())
                         buttonPressReceived = false
                         fire(PlayerMadeMove(playerChar))
-                        println("Made move ${buttonPressed.first}${buttonPressed.second}")
                     }
                 }
             }
@@ -65,7 +62,6 @@ class OnlinePlayer : Player, Controller() {
                 socket.send(
                     Frame.Text("$opponentChar${opponentKeyPressed.first}${opponentKeyPressed.second}")
                 )
-                println("Sending $opponentChar${opponentKeyPressed.first}${opponentKeyPressed.second}")
                 needToBeSend.set(false)
             }
         }
@@ -81,7 +77,6 @@ class OnlinePlayer : Player, Controller() {
                             if (input[0] == 'C') {
                                 playerChar = input[1]
                                 opponentChar = if (playerChar == 'X') 'O' else 'X'
-                                println("Char $playerChar received for online opponent, human player: $opponentChar")
                             }
                         }
                     }

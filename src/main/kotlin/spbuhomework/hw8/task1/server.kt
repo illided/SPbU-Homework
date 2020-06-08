@@ -17,7 +17,6 @@ import kotlin.collections.LinkedHashSet
 object CommunicationWord {
     const val PLAYER_CHAR = "C"
     const val BUTTON_PRESS = "B"
-    const val SERVERS_ARE_FULL = "F"
 }
 
 fun main() {
@@ -32,8 +31,6 @@ fun Application.mainModule() {
     var currentPlayerChar = 'X'
     val players: MutableList<Player> = mutableListOf()
     routing {
-        /*var currentPlayerChar = 'X'
-        val players = Collections.synchronizedSet(LinkedHashSet<Player>())*/
         webSocket("/") {
             val newPlayer = Player(this, ' ')
             when {
@@ -43,13 +40,8 @@ fun Application.mainModule() {
                 players.size == 1 -> {
                     newPlayer.playerChar = 'X'
                 }
-                else -> {
-                    this.outgoing.send(Frame.Text(CommunicationWord.SERVERS_ARE_FULL))
-                    close()
-                }
             }
             players += newPlayer
-            println("Player ${newPlayer.playerChar} connected. Number of players: ${players.size}")
             send(Frame.Text(CommunicationWord.PLAYER_CHAR + newPlayer.playerChar))
             try {
                 while (true) {
@@ -57,7 +49,6 @@ fun Application.mainModule() {
                     when (val frame = incoming.receive()) {
                         is Frame.Text -> {
                             playerMove = frame.readText()
-                            println("$playerMove received")
                         }
                     }
                     if (playerMove[0] == currentPlayerChar) {
@@ -66,17 +57,14 @@ fun Application.mainModule() {
                                 player.session.outgoing.send(
                                     Frame.Text(CommunicationWord.BUTTON_PRESS + playerMove.drop(1))
                                 )
-                                println("$playerMove send")
                             }
                         }
-                        println("Current turn = $currentPlayerChar")
                     }
                     currentPlayerChar = if (currentPlayerChar == 'X') 'O' else 'X'
                 }
             } finally {
                 players -= newPlayer
                 currentPlayerChar = 'X'
-                println("Player disconnected")
             }
         }
     }
