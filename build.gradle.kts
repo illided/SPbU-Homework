@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.3.70"
+    kotlin("jvm") version "1.3.72"
     id("io.gitlab.arturbosch.detekt") version "1.6.0"
     id("org.openjfx.javafxplugin") version "0.0.8"
     application
@@ -17,6 +17,7 @@ val ktorVersion = "1.3.2"
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:0.19")
     implementation("org.junit.jupiter:junit-jupiter-api:5.6.0")
     implementation("org.junit.jupiter:junit-jupiter-engine:5.6.0")
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.6.0")
