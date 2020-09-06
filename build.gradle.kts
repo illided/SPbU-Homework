@@ -10,12 +10,10 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
-    jcenter {
-        content {
-            includeGroup("org.jetbrains.kotlinx")
-        }
-    }
+    jcenter()
 }
+
+val ktorVersion = "1.3.2"
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
@@ -27,6 +25,13 @@ dependencies {
     implementation("org.openjfx:javafx:11.0.2")
     implementation("org.openjfx:javafx-controls:11.0.2")
     implementation("org.openjfx:javafx-maven-plugin:0.0.4")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.5")
+    compile("io.ktor:ktor-server-netty:$ktorVersion")
+    implementation("io.ktor:ktor-websockets:$ktorVersion")
+    implementation( "io.ktor:ktor-client-websockets:$ktorVersion")
+    implementation ("io.ktor:ktor-client-cio:$ktorVersion")
+    implementation ("io.ktor:ktor-client-js:$ktorVersion")
+    implementation ("io.ktor:ktor-client-okhttp:$ktorVersion")
 }
 
 
