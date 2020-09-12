@@ -1,6 +1,6 @@
 package spbuhomework.hw6
 
-import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.runBlocking
 
 abstract class Sort {
     abstract fun <T> sortArray(inputArray: Array<T>): Array<T> where T : Comparable<T>
