@@ -5,5 +5,5 @@
 1 2
 2 1,3
 3 2
-1 Effective
+1 Effective Effective
 1 UltraVirus
