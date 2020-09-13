@@ -7,7 +7,7 @@ class VulnerableComputer(id: Int) :
         id = id,
         securityFactor = 0.0,
         findingFactor = 0.0,
-        turnsUntilCheck = 10,
+        turnsUntilCheck = 1,
         nameOfOS = "Vulnerable"
     )
 
@@ -15,7 +15,7 @@ class SecureComputer(id: Int) :
     Computer(
         id = id,
         securityFactor = 1.0,
-        findingFactor = 0.0,
-        turnsUntilCheck = 10,
+        findingFactor = 1.0,
+        turnsUntilCheck = 1,
         nameOfOS = "Secure"
     )

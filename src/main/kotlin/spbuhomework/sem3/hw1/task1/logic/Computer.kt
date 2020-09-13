@@ -10,9 +10,9 @@ open class Computer(
     val id: Int
 ) {
     init {
-        require(securityFactor > 0.0 && securityFactor < 1.0) { "Invalid security factor (must be between 1 and 0" }
+        require(securityFactor in 0.0..1.0) { "Invalid security factor (must be between 1 and 0" }
         require(turnsUntilCheck > 0) { "Invalid num of turns until next check (must be greater than 0)" }
-        require(findingFactor > 0.0 && findingFactor < 1.0) { "Invalid finding factor (must be between 1 and 0" }
+        require(findingFactor in 0.0..1.0) { "Invalid finding factor (must be between 1 and 0" }
         require(id > 0) { "Invalid ID (must be greater than 0" }
     }
 
@@ -47,9 +47,8 @@ open class Computer(
     }
 
     fun checkPhase() {
-        if (turnsUntilCheckLeft > 0) {
-            turnsUntilCheckLeft--
-        } else {
+        turnsUntilCheckLeft--
+        if (turnsUntilCheckLeft <= 0) {
             val quarantine = mutableListOf<Virus>()
             for (virus in viruses) {
                 val finalChanceOfFinding = virus.symptomatic * findingFactor
