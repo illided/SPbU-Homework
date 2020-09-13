@@ -28,43 +28,44 @@ object SimulationConfigParser {
                 networkConfig
             )
 
+        require(configAsLineList.isNotEmpty()) {"Config file is empty or all text is commented/blank"}
         val paragraphSize = configAsLineList[0].toIntOrNull()
             ?: throw IllegalArgumentException("A number was expected but \"${configAsLineList[0]}\" was met:")
 
-        val myLineSetCreator =
-            LineSetCreator(
-                configAsLineList,
-                paragraphSize
-            )
+        val myLineSetCreator = LineSetCreator(configAsLineList, paragraphSize)
         return listOf(
             myLineSetCreator.getLineSet(
-                COMPUTER_OS_REGEX,
-                "Invalid format for OS input: ",
-                COMPUTER_OS_PARAGRAPH_NUMBER * paragraphSize + 1
+                lineMatchesTo = COMPUTER_OS_REGEX,
+                exceptionText = "Invalid format for OS input: ",
+                start = COMPUTER_OS_PARAGRAPH_NUMBER * paragraphSize + 1,
+                stop = (COMPUTER_OS_PARAGRAPH_NUMBER + 1) * paragraphSize + 1
             ),
             myLineSetCreator.getLineSet(
-                CONNECTED_COMPUTERS_REGEX,
-                "Invalid format for connections input: ",
-                CONNECTIONS_PARAGRAPH_NUMBER * paragraphSize + 1
+                lineMatchesTo = CONNECTED_COMPUTERS_REGEX,
+                exceptionText = "Invalid format for connections input: ",
+                start = CONNECTIONS_PARAGRAPH_NUMBER * paragraphSize + 1,
+                stop = (CONNECTIONS_PARAGRAPH_NUMBER + 1) * paragraphSize + 1
             ),
             myLineSetCreator.getLineSet(
-                INFECTED_COMPUTER_REGEX,
-                "Invalid format for infection input: ",
-                INFECTIONS_PARAGRAPH_NUMBER * paragraphSize + 1
+                lineMatchesTo = INFECTED_COMPUTER_REGEX,
+                exceptionText = "Invalid format for infection input: ",
+                start = INFECTIONS_PARAGRAPH_NUMBER * paragraphSize + 1,
+                stop = configAsLineList.size
             )
         )
     }
 
-    private class LineSetCreator(val networkConfigLineList: List<String>, private val paragraphSize: Int){
+    private class LineSetCreator(val networkConfigLineList: List<String>, private val paragraphSize: Int) {
         fun getLineSet(
-            matchesTo: Regex,
+            lineMatchesTo: Regex,
             exceptionText: String,
-            start: Int
+            start: Int,
+            stop: Int
         ): Set<List<String>> {
             val lineSet = mutableSetOf<List<String>>()
-            for (i in start..start + paragraphSize) {
+            for (i in start until stop) {
                 val line = networkConfigLineList[i]
-                require(line.matches(matchesTo)) { exceptionText + line }
+                require(line.matches(lineMatchesTo)) { exceptionText + line }
                 lineSet.add(line.split(" "))
             }
             return lineSet.toSet()
@@ -84,4 +85,3 @@ object SimulationConfigParser {
         return configAsLineList
     }
 }
-
