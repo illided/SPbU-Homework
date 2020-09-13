@@ -3,7 +3,7 @@ package spbuhomework.sem3.hw1.task1
 import spbuhomework.sem3.hw1.task1.logic.Simulation
 import java.io.File
 
-const val CONFIG_OF_NETWORK_PATH = "src/main/kotlin/spbuhomework_sem3/hw1/task1/ConfigurationOfNetwork.txt"
+const val CONFIG_OF_NETWORK_PATH = "src/main/kotlin/spbuhomework/sem3/hw1/task1/ConfigurationOfNetwork.txt"
 
 const val MAX_NUM_OF_TURNS = 100
 const val LENGTH_OF_TURN = 1000
@@ -15,7 +15,11 @@ fun main() {
     if (!config.exists()){
         print("No access to config file")
     } else {
-        val mySimulation = Simulation(config)
-        mySimulation.runSimulation()
+        try {
+            val mySimulation = Simulation(config)
+            mySimulation.runSimulation()
+        } catch (exception: IllegalArgumentException){
+            print(exception.message)
+        }
     }
 }

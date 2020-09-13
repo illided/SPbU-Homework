@@ -29,9 +29,9 @@
 10 1,3,5,7
 
 //Infections (ID of computer then name of the virus)
-1 CryptoLockerVirus
+1 CryptoLocker
 1 WannaCry
 3 WannaCry
 5 WannaCry
-7 CryptoLockerVirus
-9 CryptoLockerVirus
+7 CryptoLocker
+9 CryptoLocker

@@ -4,13 +4,13 @@ import kotlin.random.Random
 
 open class Computer(
     private val securityFactor: Double,
-    val turnsUntilCheck: Int,
+    private val turnsUntilCheck: Int,
     private val findingFactor: Double,
     private val nameOfOS: String,
-    private val ID: Int
+    val ID: Int
 ) {
-    private val viruses: MutableList<Virus> = mutableListOf()
-    private val connectedComputers: MutableList<Computer> = mutableListOf()
+    val viruses: MutableList<Virus> = mutableListOf()
+    val connectedComputers: MutableList<Computer> = mutableListOf()
 
     private var turnsUntilCheckLeft = turnsUntilCheck
 
@@ -50,6 +50,7 @@ open class Computer(
                     viruses.remove(virus)
                 }
             }
+            turnsUntilCheckLeft = turnsUntilCheck
         }
     }
 }
