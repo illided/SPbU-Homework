@@ -24,10 +24,8 @@ open class Computer(
     private fun transferVirus(subComputer: Computer, virus: Virus) {
         val finalChanceOfInfection = virus.infectivity * (1 - subComputer.securityFactor)
 
-        if (Random.nextDouble(from = 0.0, until = 1.0) <= finalChanceOfInfection
-            && subComputer
-                .viruses
-                .find { it.name == virus.name } == null
+        if (Random.nextDouble(from = 0.0, until = 1.0) <= finalChanceOfInfection &&
+            subComputer.viruses.find { it.name == virus.name } == null
         ) {
             subComputer.viruses.add(virus)
         }

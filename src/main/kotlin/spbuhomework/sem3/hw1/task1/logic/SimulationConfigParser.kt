@@ -72,7 +72,6 @@ object SimulationConfigParser {
         }
     }
 
-
     private fun getConfigAsLineList(networkConfig: File): List<String> {
         val inputStream: InputStream = networkConfig.inputStream()
         val configAsLineList = mutableListOf<String>()
