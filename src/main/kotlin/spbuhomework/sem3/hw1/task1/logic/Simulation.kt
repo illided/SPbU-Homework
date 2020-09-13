@@ -43,8 +43,8 @@ class Simulation(networkConfig: File) {
                 val targetComputer = network.find { it.ID == line[0].toInt() }
                     ?: throw IllegalArgumentException("Can't find computer with ID: ${line[0]}")
 
-                val connectedComputerList = line[1].split(",").map {idInTheLineSet ->
-                    network.find {computerInTheNetwork -> computerInTheNetwork.ID == idInTheLineSet.toInt()}
+                val connectedComputerList = line[1].split(",").map { idInTheLineSet ->
+                    network.find { computerInTheNetwork -> computerInTheNetwork.ID == idInTheLineSet.toInt() }
                         ?: throw IllegalArgumentException("Can't find computer with ID: $idInTheLineSet")
                 }
                 for (computer in connectedComputerList) {
@@ -54,7 +54,7 @@ class Simulation(networkConfig: File) {
         }
 
         private fun setInfection(networkConfigLineSet: Set<List<String>>, network: Set<Computer>) {
-            for (line in networkConfigLineSet){
+            for (line in networkConfigLineSet) {
                 val targetComputer = network.find { it.ID == line[0].toInt() }
                     ?: throw IllegalArgumentException("Can't find computer with ID: ${line[0]}")
                 ComputerConfigurator.addVirus(targetComputer, line[1])
@@ -63,7 +63,7 @@ class Simulation(networkConfig: File) {
     }
 
     fun run() {
-        for (i in 1..NetworkSetUp.NUM_OF_TURNS){
+        for (i in 1..NetworkSetUp.NUM_OF_TURNS) {
             if (i % NetworkSetUp.SHOW_STATISTIC_EVERY_x_TURNS == 0) {
                 printStatistic()
             }
@@ -74,18 +74,18 @@ class Simulation(networkConfig: File) {
 
     private fun makeTurn() {
         //spread virus
-        for (computer in network){
+        for (computer in network) {
             computer.spreadVirusPhase()
         }
         //then all computers check for viruses
-        for (computer in network){
+        for (computer in network) {
             computer.checkPhase()
         }
     }
 
-    private fun printStatistic(){
+    private fun printStatistic() {
         print("--------------------------------------------------------\n")
-        for (computer in network){
+        for (computer in network) {
             print("$computer\n")
         }
         print("--------------------------------------------------------\n")

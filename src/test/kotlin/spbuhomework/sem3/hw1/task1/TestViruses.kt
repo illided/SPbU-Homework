@@ -9,7 +9,7 @@ class InfectiveButSymptomaticVirus :
         name = "InfectiveVirus"
     )
 
-class InfectiveAndStealthyVirus:
+class InfectiveAndStealthyVirus :
     Virus(
         infectivity = 0.4,
         symptomatic = 0.4,

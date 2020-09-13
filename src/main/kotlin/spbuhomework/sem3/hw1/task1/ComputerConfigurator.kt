@@ -13,7 +13,7 @@ object ComputerConfigurator {
         }
     }
 
-    fun addVirus(computer: Computer, virusString: String){
+    fun addVirus(computer: Computer, virusString: String) {
         when (virusString) {
             "WannaCry" -> computer.viruses.add(WannaCryVirus())
             "CryptoLocker" -> computer.viruses.add(CryptoLockerVirus())

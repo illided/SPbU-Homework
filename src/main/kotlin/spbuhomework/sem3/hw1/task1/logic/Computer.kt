@@ -10,10 +10,10 @@ open class Computer(
     val ID: Int
 ) {
     init {
-        require(securityFactor > 0.0 && securityFactor < 1.0) {"Invalid security factor (must be between 1 and 0"}
-        require(turnsUntilCheck > 0) {"Invalid num of turns until next check (must be greater than 0)"}
-        require(findingFactor > 0.0 && findingFactor < 1.0) {"Invalid finding factor (must be between 1 and 0"}
-        require(ID > 0) {"Invalid ID (must be greater than 0"}
+        require(securityFactor > 0.0 && securityFactor < 1.0) { "Invalid security factor (must be between 1 and 0" }
+        require(turnsUntilCheck > 0) { "Invalid num of turns until next check (must be greater than 0)" }
+        require(findingFactor > 0.0 && findingFactor < 1.0) { "Invalid finding factor (must be between 1 and 0" }
+        require(ID > 0) { "Invalid ID (must be greater than 0" }
     }
 
     val viruses: MutableList<Virus> = mutableListOf()

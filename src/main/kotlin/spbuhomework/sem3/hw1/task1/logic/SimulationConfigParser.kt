@@ -28,7 +28,7 @@ object SimulationConfigParser {
                 networkConfig
             )
 
-        require(configAsLineList.isNotEmpty()) {"Config file is empty or all text is commented/blank"}
+        require(configAsLineList.isNotEmpty()) { "Config file is empty or all text is commented/blank" }
         val paragraphSize = configAsLineList[0].toIntOrNull()
             ?: throw IllegalArgumentException("A number was expected but \"${configAsLineList[0]}\" was met:")
 

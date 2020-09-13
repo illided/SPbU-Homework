@@ -13,13 +13,13 @@ object NetworkSetUp {
 
 fun main() {
     val config = File(CONFIG_OF_NETWORK_PATH)
-    if (!config.exists()){
+    if (!config.exists()) {
         print("No access to config file")
     } else {
         try {
             val mySimulation = Simulation(config)
             mySimulation.run()
-        } catch (exception: IllegalArgumentException){
+        } catch (exception: IllegalArgumentException) {
             print(exception.message)
         }
     }
