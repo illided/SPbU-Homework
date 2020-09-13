@@ -1,4 +1,4 @@
-package spbuhomework_sem3.hw1.task1.logic
+package spbuhomework.sem3.hw1.task1
 
 import org.junit.jupiter.api.Test
 

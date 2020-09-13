@@ -1,4 +1,4 @@
-package spbuhomework_sem3.hw1.task1.logic
+package spbuhomework.sem3.hw1.task1.logic
 
 import java.io.File
 import java.lang.IllegalArgumentException

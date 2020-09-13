@@ -1,6 +1,6 @@
-package spbuhomework_sem3.hw1.task1
+package spbuhomework.sem3.hw1.task1
 
-import spbuhomework_sem3.hw1.task1.logic.Simulation
+import spbuhomework.sem3.hw1.task1.logic.Simulation
 import java.io.File
 
 const val CONFIG_OF_NETWORK_PATH = "src/main/kotlin/spbuhomework_sem3/hw1/task1/ConfigurationOfNetwork"

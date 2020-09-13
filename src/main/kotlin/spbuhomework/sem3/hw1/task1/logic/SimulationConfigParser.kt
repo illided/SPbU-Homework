@@ -1,4 +1,4 @@
-package spbuhomework_sem3.hw1.task1.logic
+package spbuhomework.sem3.hw1.task1.logic
 
 import java.io.File
 import java.io.InputStream
@@ -23,12 +23,19 @@ object SimulationConfigParser {
     private const val INFECTIONS_PARAGRAPH_NUMBER = 2
 
     fun parseConfig(networkConfig: File): List<Set<List<String>>> {
-        val configAsLineList = getConfigAsLineList(networkConfig)
+        val configAsLineList =
+            getConfigAsLineList(
+                networkConfig
+            )
 
         val paragraphSize = configAsLineList[0].toIntOrNull()
             ?: throw IllegalArgumentException("A number was expected but \"${configAsLineList[0]}\" was met:")
 
-        val myLineSetCreator = LineSetCreator(configAsLineList, paragraphSize)
+        val myLineSetCreator =
+            LineSetCreator(
+                configAsLineList,
+                paragraphSize
+            )
         return listOf(
             myLineSetCreator.getLineSet(
                 COMPUTER_OS_REGEX,

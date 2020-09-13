@@ -1,6 +1,6 @@
-package spbuhomework_sem3.hw1.task1
+package spbuhomework.sem3.hw1.task1
 
-import spbuhomework_sem3.hw1.task1.logic.Computer
+import spbuhomework.sem3.hw1.task1.logic.Computer
 
 object ComputerGiver {
     fun getComputer(id: Int, ComputerOS: String): Computer {
