@@ -4,7 +4,7 @@ import spbuhomework.sem3.hw1.task1.logic.Computer
 
 class WindowsProtectedComputer(id: Int) :
     Computer(
-        ID = id,
+        id = id,
         securityFactor = 0.7,
         turnsUntilCheck = 1,
         findingFactor = 0.8,
@@ -13,7 +13,7 @@ class WindowsProtectedComputer(id: Int) :
 
 class WindowsUnprotectedComputer(id: Int) :
     Computer(
-        ID = id,
+        id = id,
         securityFactor = 0.2,
         turnsUntilCheck = 3,
         findingFactor = 0.5,
@@ -22,7 +22,7 @@ class WindowsUnprotectedComputer(id: Int) :
 
 class LinuxComputer(id: Int) :
     Computer(
-        ID = id,
+        id = id,
         securityFactor = 0.8,
         turnsUntilCheck = 5,
         findingFactor = 0.8,
@@ -31,7 +31,7 @@ class LinuxComputer(id: Int) :
 
 class MacComputer(id: Int) :
     Computer(
-        ID = id,
+        id = id,
         securityFactor = 0.9,
         turnsUntilCheck = 10,
         findingFactor = 0.7,

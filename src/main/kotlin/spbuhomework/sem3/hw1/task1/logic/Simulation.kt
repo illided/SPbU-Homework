@@ -40,11 +40,11 @@ class Simulation(networkConfig: File) {
 
         private fun setConnections(networkConfigLineSet: Set<List<String>>, network: Set<Computer>) {
             for (line in networkConfigLineSet) {
-                val targetComputer = network.find { it.ID == line[0].toInt() }
+                val targetComputer = network.find { it.id == line[0].toInt() }
                     ?: throw IllegalArgumentException("Can't find computer with ID: ${line[0]}")
 
                 val connectedComputerList = line[1].split(",").map { idInTheLineSet ->
-                    network.find { computerInTheNetwork -> computerInTheNetwork.ID == idInTheLineSet.toInt() }
+                    network.find { computerInTheNetwork -> computerInTheNetwork.id == idInTheLineSet.toInt() }
                         ?: throw IllegalArgumentException("Can't find computer with ID: $idInTheLineSet")
                 }
                 for (computer in connectedComputerList) {
@@ -55,7 +55,7 @@ class Simulation(networkConfig: File) {
 
         private fun setInfection(networkConfigLineSet: Set<List<String>>, network: Set<Computer>) {
             for (line in networkConfigLineSet) {
-                val targetComputer = network.find { it.ID == line[0].toInt() }
+                val targetComputer = network.find { it.id == line[0].toInt() }
                     ?: throw IllegalArgumentException("Can't find computer with ID: ${line[0]}")
                 ComputerConfigurator.addVirus(targetComputer, line[1])
             }
@@ -73,11 +73,11 @@ class Simulation(networkConfig: File) {
     }
 
     private fun makeTurn() {
-        //spread virus
+        // spread virus
         for (computer in network) {
             computer.spreadVirusPhase()
         }
-        //then all computers check for viruses
+        // then all computers check for viruses
         for (computer in network) {
             computer.checkPhase()
         }
@@ -91,4 +91,3 @@ class Simulation(networkConfig: File) {
         print("--------------------------------------------------------\n")
     }
 }
-

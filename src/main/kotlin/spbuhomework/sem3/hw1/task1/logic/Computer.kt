@@ -7,13 +7,13 @@ open class Computer(
     private val turnsUntilCheck: Int,
     private val findingFactor: Double,
     private val nameOfOS: String,
-    val ID: Int
+    val id: Int
 ) {
     init {
         require(securityFactor > 0.0 && securityFactor < 1.0) { "Invalid security factor (must be between 1 and 0" }
         require(turnsUntilCheck > 0) { "Invalid num of turns until next check (must be greater than 0)" }
         require(findingFactor > 0.0 && findingFactor < 1.0) { "Invalid finding factor (must be between 1 and 0" }
-        require(ID > 0) { "Invalid ID (must be greater than 0" }
+        require(id > 0) { "Invalid ID (must be greater than 0" }
     }
 
     val viruses: MutableList<Virus> = mutableListOf()
@@ -25,7 +25,9 @@ open class Computer(
         val finalChanceOfInfection = virus.infectivity * (1 - subComputer.securityFactor)
 
         if (Random.nextDouble(from = 0.0, until = 1.0) <= finalChanceOfInfection
-            && subComputer.viruses.find { it.name == virus.name } == null
+            && subComputer
+                .viruses
+                .find { it.name == virus.name } == null
         ) {
             subComputer.viruses.add(virus)
         }
@@ -33,7 +35,7 @@ open class Computer(
 
     override fun toString(): String {
         return listOf(
-            ID.toString(),
+            id.toString(),
             nameOfOS,
             viruses.joinToString(",") { it.toString() }).joinToString("\t")
     }
