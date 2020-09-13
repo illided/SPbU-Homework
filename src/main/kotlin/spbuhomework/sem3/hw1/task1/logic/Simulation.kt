@@ -1,6 +1,7 @@
 package spbuhomework.sem3.hw1.task1.logic
 
 import spbuhomework.sem3.hw1.task1.ComputerConfigurator
+import spbuhomework.sem3.hw1.task1.NetworkSetUp
 import java.io.File
 import kotlin.IllegalArgumentException
 
@@ -9,10 +10,10 @@ class Simulation(networkConfig: File) {
     private val network: Set<Computer>
 
     init {
-        network = Builder.buildNetwork(networkConfig)
+        network = buildNetwork(networkConfig)
     }
 
-    internal object Builder {
+    companion object Builder {
         fun buildNetwork(networkConfig: File): Set<Computer> {
             try {
                 val (computerLineSet,
@@ -61,9 +62,33 @@ class Simulation(networkConfig: File) {
         }
     }
 
-    fun runSimulation() {
-
+    fun run() {
+        for (i in 1..NetworkSetUp.NUM_OF_TURNS){
+            if (i % NetworkSetUp.SHOW_STATISTIC_EVERY_x_TURNS == 0) {
+                printStatistic()
+            }
+            makeTurn()
+            Thread.sleep(NetworkSetUp.LENGTH_OF_TURN.toLong())
+        }
     }
 
+    private fun makeTurn() {
+        //spread virus
+        for (computer in network){
+            computer.spreadVirusPhase()
+        }
+        //then all computers check for viruses
+        for (computer in network){
+            computer.checkPhase()
+        }
+    }
+
+    private fun printStatistic(){
+        print("--------------------------------------------------------\n")
+        for (computer in network){
+            print("$computer\n")
+        }
+        print("--------------------------------------------------------\n")
+    }
 }
 
