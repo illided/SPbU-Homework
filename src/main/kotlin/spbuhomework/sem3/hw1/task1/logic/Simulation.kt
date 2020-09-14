@@ -47,9 +47,7 @@ class Simulation(networkConfig: File) {
                     network.find { computerInTheNetwork -> computerInTheNetwork.id == idInTheLineSet.toInt() }
                         ?: throw IllegalArgumentException("Can't find computer with ID: $idInTheLineSet")
                 }
-                for (computer in connectedComputerList) {
-                    targetComputer.connectedComputers.add(computer)
-                }
+                connectedComputerList.map { targetComputer.connectedComputers.add(it) }
             }
         }
 
@@ -63,7 +61,7 @@ class Simulation(networkConfig: File) {
     }
 
     fun run() {
-        for (i in 1..NetworkSetUp.NUM_OF_TURNS) {
+        for (i in 0..NetworkSetUp.NUM_OF_TURNS) {
             if (i % NetworkSetUp.SHOW_STATISTIC_EVERY_x_TURNS == 0) {
                 printStatistic()
             }
@@ -74,20 +72,14 @@ class Simulation(networkConfig: File) {
 
     private fun makeTurn() {
         // spread virus
-        for (computer in network) {
-            computer.spreadVirusPhase()
-        }
+        network.map { it.spreadVirusPhase() }
         // then all computers check for viruses
-        for (computer in network) {
-            computer.checkPhase()
-        }
+        network.map { it.checkPhase() }
     }
 
     private fun printStatistic() {
-        print("--------------------------------------------------------\n")
-        for (computer in network) {
-            print("$computer\n")
-        }
-        print("--------------------------------------------------------\n")
+        print("--------------------------------------------------------\n" +
+                network.joinToString("\n") { it.toString() } +
+                "\n--------------------------------------------------------\n")
     }
 }
