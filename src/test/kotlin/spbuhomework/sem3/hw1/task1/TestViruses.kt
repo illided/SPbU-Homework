@@ -22,3 +22,10 @@ class UselessVirus :
         symptomatic = 1.0,
         name = "Useless"
     )
+
+class SemiInfectiveSemiStealthyVirus :
+    Virus(
+        infectivity = 0.5,
+        symptomatic = 0.5,
+        name = "SemiVirus"
+    )
