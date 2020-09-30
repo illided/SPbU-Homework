@@ -30,6 +30,120 @@ internal class ParkingTest {
     }
 
     @Test
-    fun leave() {
+    fun tryToEnter_ThreeCarsTwoParkingMachinesThreePlacesNoAsync_carRegistered() {
+        val myServer = MainServer(3)
+        val firstParking = Parking(myServer)
+        val secondParking = Parking(myServer)
+        firstParking.tryToEnter()
+        firstParking.tryToEnter()
+        assertTrue(secondParking.tryToEnter())
+    }
+
+    @Test
+    fun tryToEnter_ThreeCarsTwoParkingMachinesTwoPlacesNoAsync_carNotRegistered() {
+        val myServer = MainServer(2)
+        val firstParking = Parking(myServer)
+        val secondParking = Parking(myServer)
+        firstParking.tryToEnter()
+        firstParking.tryToEnter()
+        assertFalse(secondParking.tryToEnter())
+    }
+
+    private fun simulateEntering(
+        numOfThreads: Int,
+        carsPerThread: Int,
+        numOfParkingPlaces: Int
+    ): Int {
+        var numOfEnteredCars = 0
+        val listOfThreads = mutableListOf<Thread>()
+        val myServer = MainServer(numOfParkingPlaces)
+        for (i in 0 until numOfThreads) {
+            val myParking = Parking(myServer)
+            listOfThreads.add(Thread {
+                for (j in 0 until carsPerThread) {
+                    if (myParking.tryToEnter()) {
+                        numOfEnteredCars++
+                    }
+                }
+            })
+        }
+        listOfThreads.map { it.start() }
+        listOfThreads.map { it.join() }
+        return numOfEnteredCars
+    }
+
+    @Test
+    fun tryToEnter_ThreeCarsThreeParkingMachinesThreePlacesAsync_correctNumberOfEnteredCars() {
+        assertEquals(3, simulateEntering(3, 1, 3))
+    }
+
+    @Test
+    fun tryToEnter_ThreeCarsThreeParkingMachinesTwoPlacesAsync_correctNumberOfEnteredCars() {
+        assertEquals(2, simulateEntering(3, 1, 2))
+    }
+
+    @Test
+    fun tryToEnter_HundredCarsFiveParkingMachinesHundredPlacesAsync_correctNumberOfEnteredCars() {
+        assertEquals(100, simulateEntering(5, 20, 100))
+    }
+
+    @Test
+    fun tryToEnter_HundredCarsFiveParkingMachinesFiftyPlacesAsync_correctNumberOfEnteredCars() {
+        assertEquals(50, simulateEntering(5, 20, 50))
+    }
+
+    private fun simulateLeaving(
+        numOfThreads: Int,
+        carsPerThread: Int,
+        numOfParkingPlaces: Int,
+        numOfParkedCars: Int
+    ): Int {
+        var numOfCarsLeft = 0
+        val listOfThreads = mutableListOf<Thread>()
+        val myServer = MainServer(numOfParkingPlaces)
+        myServer.availableSpaces.set(numOfParkingPlaces - numOfParkedCars)
+        for (i in 0 until numOfThreads) {
+            val myParking = Parking(myServer)
+            listOfThreads.add(Thread {
+                for (j in 0 until carsPerThread) {
+                    if (myParking.leave()) {
+                        numOfCarsLeft++
+                    }
+                }
+            })
+        }
+        listOfThreads.map { it.start() }
+        listOfThreads.map { it.join() }
+        return numOfCarsLeft
+    }
+
+    @Test
+    fun leave_fromNonEmptyParking_carLeft() {
+        assertTrue(createAndFillParking(3, 5).leave())
+    }
+
+    @Test
+    fun leave_fromEmptyParking_carNotLeft() {
+        assertFalse(createAndFillParking(0, 5).leave())
+    }
+
+    @Test
+    fun leave_hundredCarsLeaveFiveParkingMachinesHundredCarsParkedNoAsync_correctNumOfCarsThatLeft() {
+        assertEquals(100, simulateLeaving(1, 100, 1000, 100))
+    }
+
+    @Test
+    fun leave_hundredCarsLeaveFiveParkingMachinesFiftyCarsParkedNoAsync_correctNumOfCarsThatLeft() {
+        assertEquals(50, simulateLeaving(1, 100, 1000, 50))
+    }
+
+    @Test
+    fun leave_hundredCarsLeaveFiveParkingMachinesHundredCarsParkedAsync_correctNumOfCarsThatLeft() {
+        assertEquals(100, simulateLeaving(5, 20, 1000, 100))
+    }
+
+    @Test
+    fun leave_hundredCarsLeaveFiveParkingMachinesFiftyCarsParkedAsync_correctNumOfCarsThatLeft() {
+        assertEquals(50, simulateLeaving(5, 20, 1000, 50))
     }
 }
