@@ -3,6 +3,7 @@ package spbuhomework.sem3.hw3
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*
+import java.util.concurrent.atomic.AtomicInteger
 
 internal class ParkingTest {
 
@@ -54,7 +55,7 @@ internal class ParkingTest {
         carsPerThread: Int,
         numOfParkingPlaces: Int
     ): Int {
-        var numOfEnteredCars = 0
+        var numOfEnteredCars = AtomicInteger(0)
         val listOfThreads = mutableListOf<Thread>()
         val myServer = MainServer(numOfParkingPlaces)
         for (i in 0 until numOfThreads) {
@@ -62,14 +63,14 @@ internal class ParkingTest {
             listOfThreads.add(Thread {
                 for (j in 0 until carsPerThread) {
                     if (myParking.tryToEnter()) {
-                        numOfEnteredCars++
+                        numOfEnteredCars.incrementAndGet()
                     }
                 }
             })
         }
         listOfThreads.map { it.start() }
         listOfThreads.map { it.join() }
-        return numOfEnteredCars
+        return numOfEnteredCars.get()
     }
 
     @Test
@@ -98,7 +99,7 @@ internal class ParkingTest {
         numOfParkingPlaces: Int,
         numOfParkedCars: Int
     ): Int {
-        var numOfCarsLeft = 0
+        var numOfCarsLeft = AtomicInteger(0)
         val listOfThreads = mutableListOf<Thread>()
         val myServer = MainServer(numOfParkingPlaces)
         myServer.availableSpaces.set(numOfParkingPlaces - numOfParkedCars)
@@ -107,14 +108,14 @@ internal class ParkingTest {
             listOfThreads.add(Thread {
                 for (j in 0 until carsPerThread) {
                     if (myParking.leave()) {
-                        numOfCarsLeft++
+                        numOfCarsLeft.incrementAndGet()
                     }
                 }
             })
         }
         listOfThreads.map { it.start() }
         listOfThreads.map { it.join() }
-        return numOfCarsLeft
+        return numOfCarsLeft.get()
     }
 
     @Test
