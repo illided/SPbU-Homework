@@ -55,7 +55,7 @@ internal class ParkingTest {
         carsPerThread: Int,
         numOfParkingPlaces: Int
     ): Int {
-        var numOfEnteredCars = AtomicInteger(0)
+        val numOfEnteredCars = AtomicInteger(0)
         val listOfThreads = mutableListOf<Thread>()
         val myServer = MainServer(numOfParkingPlaces)
         for (i in 0 until numOfThreads) {
@@ -99,10 +99,9 @@ internal class ParkingTest {
         numOfParkingPlaces: Int,
         numOfParkedCars: Int
     ): Int {
-        var numOfCarsLeft = AtomicInteger(0)
+        val numOfCarsLeft = AtomicInteger(0)
         val listOfThreads = mutableListOf<Thread>()
-        val myServer = MainServer(numOfParkingPlaces)
-        myServer.availableSpaces.set(numOfParkingPlaces - numOfParkedCars)
+        val myServer = MainServer(numOfParkingPlaces, startingAvailableSpaces = numOfParkingPlaces - numOfParkedCars)
         for (i in 0 until numOfThreads) {
             val myParking = Parking(myServer)
             listOfThreads.add(Thread {
