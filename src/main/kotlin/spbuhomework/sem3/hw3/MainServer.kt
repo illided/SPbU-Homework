@@ -10,18 +10,11 @@ class MainServer(
 ) {
     private val availableSpaces = AtomicInteger(startingAvailableSpaces)
     fun send(request: Request): Boolean {
-        var result = false
-
-        val job = when (request.type) {
-            "enter" -> Thread { result = proceedEntering() }
-            "leave" -> Thread { result = proceedLeaving() }
-            else -> Thread { result = wrongCode() }
+        return when (request.type) {
+            "enter" -> proceedEntering()
+            "leave" -> proceedLeaving()
+            else -> wrongCode()
         }
-
-        job.run()
-        job.join()
-
-        return result
     }
 
     private fun proceedEntering(): Boolean {
