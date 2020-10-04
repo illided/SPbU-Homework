@@ -13,7 +13,7 @@ class MainServer(
         return when (request.type) {
             "enter" -> proceedEntering()
             "leave" -> proceedLeaving()
-            else -> wrongCode()
+            else -> false
         }
     }
 
@@ -36,6 +36,4 @@ class MainServer(
         }
         return valueBeforeLeaving != numOfParkingSpaces
     }
-
-    private fun wrongCode(): Boolean = false
 }

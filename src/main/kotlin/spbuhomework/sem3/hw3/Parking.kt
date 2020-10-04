@@ -6,7 +6,6 @@ class Parking(private val server: MainServer) {
     fun leave(): Boolean = mySender.sendRequest(Request("leave"))
 }
 
-
 class Sender(private val server: MainServer) {
     fun sendRequest(request: Request): Boolean {
         var result = false
