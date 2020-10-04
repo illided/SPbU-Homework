@@ -8,7 +8,7 @@ class Parking(private val server: MainServer) {
 
 
 class Sender(private val server: MainServer) {
-    fun sendRequest(request: Request) : Boolean {
+    fun sendRequest(request: Request): Boolean {
         var result = false
         val job = Thread {
             result = server.send(request)

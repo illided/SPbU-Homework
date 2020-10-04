@@ -37,7 +37,5 @@ class MainServer(
         return valueBeforeLeaving != numOfParkingSpaces
     }
 
-    private fun wrongCode(): Boolean {
-        return false
-    }
+    private fun wrongCode(): Boolean = false
 }
