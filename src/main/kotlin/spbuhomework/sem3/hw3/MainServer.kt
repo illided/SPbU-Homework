@@ -2,8 +2,6 @@ package spbuhomework.sem3.hw3
 
 import java.util.concurrent.atomic.AtomicInteger
 
-const val NUMBER_OF_PARKING_SPACES = 10
-
 class Database(private val numOfParkingSpaces: Int, startingAvailableSpaces: Int) {
     private val availableSpaces = AtomicInteger(startingAvailableSpaces)
 
@@ -32,6 +30,10 @@ class MainServer(
     private val numOfParkingSpaces: Int = NUMBER_OF_PARKING_SPACES,
     startingAvailableSpaces: Int = numOfParkingSpaces
 ) {
+    companion object {
+        private const val NUMBER_OF_PARKING_SPACES = 10
+    }
+
     private val database = Database(numOfParkingSpaces, startingAvailableSpaces)
     fun processRequest(request: Request): Boolean {
         var result = false
