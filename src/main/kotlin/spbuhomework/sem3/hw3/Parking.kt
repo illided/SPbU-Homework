@@ -10,9 +10,9 @@ class Sender(private val server: MainServer) {
     fun sendRequest(request: Request): Boolean {
         var result = false
         val job = Thread {
-            result = server.send(request)
+            result = server.processRequest(request)
         }
-        job.run()
+        job.start()
         job.join()
         return result
     }
